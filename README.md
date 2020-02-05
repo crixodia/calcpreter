@@ -103,6 +103,6 @@ El orden de compilación es importante y será de la siguiente forma:
 
 En la siguiente captura podemos ver asignaciones a diferentes variables, el uso de estas n otras asignaciones impresión de valores y al finalizar la ejecución de imprime la tabla de símbolos.
 
-![](C:\Users\gabri\OneDrive - Escuela Politécnica Nacional\Compiladores y Lenguajes\Programas Yacc\Calculadora Lex Yacc\examples\preview.png)
+![](https://raw.githubusercontent.com/crixodia/interprete-calculadora/master/examples/preview.png)
 
 Si usamos el archivo [input.txt](https://github.com/crixodia/interprete-calculadora/blob/master/examples/input.txt) obtendremos la salida que se guarda en el archivo [output.txt](https://github.com/crixodia/interprete-calculadora/blob/master/examples/output.txt)
