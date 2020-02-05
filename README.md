@@ -89,15 +89,15 @@ E   :E '+' E		   	    { $$ = $1 + $3; }
 
 ## Tabla de símbolos<a name="tabla"></a>
 
-El archivo [TabSim.c]() tiene como fin la creación de la tabla de símbolos durante la interpretación de nuestras expresiones. Esta contarán con una función parar **crear** una tabla de símbolos, **insertar** un símbolo, **buscar** un símbolo en la tabla y finalmente una para **imprimir** su contenido.
+El archivo [TabSim.c](https://github.com/crixodia/interprete-calculadora/blob/master/calc/TabSim.c) tiene como fin la creación de la tabla de símbolos durante la interpretación de nuestras expresiones. Esta contarán con una función parar **crear** una tabla de símbolos, **insertar** un símbolo, **buscar** un símbolo en la tabla y finalmente una para **imprimir** su contenido.
 
 ## ¿Cómo compilo el compilador? :smile:<a name="compilar"></a>
 
 El orden de compilación es importante y será de la siguiente forma:
 
-1. lex [a.l]()
-2. yacc [a.y]()
-3. gcc [y.tab.c]() -lm
+1. lex [a.l](https://github.com/crixodia/interprete-calculadora/blob/master/calc/a.l)
+2. yacc [a.y](https://github.com/crixodia/interprete-calculadora/blob/master/calc/a.y)
+3. gcc [y.tab.c](https://github.com/crixodia/interprete-calculadora/blob/master/calc/y.tab.c) -lm
 
 ## Ejemplo de ejecución :desktop_computer:<a name="ejecucion"></a>
 
@@ -105,4 +105,4 @@ En la siguiente captura podemos ver asignaciones a diferentes variables, el uso 
 
 ![](C:\Users\gabri\OneDrive - Escuela Politécnica Nacional\Compiladores y Lenguajes\Programas Yacc\Calculadora Lex Yacc\examples\preview.png)
 
-Si usamos el archivo [input.txt]() obtendremos la salida que se guarda en el archivo [output.txt]()
+Si usamos el archivo [input.txt](https://github.com/crixodia/interprete-calculadora/blob/master/examples/input.txt) obtendremos la salida que se guarda en el archivo [output.txt](https://github.com/crixodia/interprete-calculadora/blob/master/examples/output.txt)
