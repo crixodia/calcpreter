@@ -17,17 +17,17 @@ Para el análisis léxico es necesario plantear las expresiones regulares que ac
 
 |                           Función                            | Expresión | Token |
 | :----------------------------------------------------------: | :-------: | :---: |
-| <img src="https://latex.codecogs.com/gif.latex?%5Csin%7Bx%7D"/> |   "SEN"   |  SEN  |
-| <img src="https://latex.codecogs.com/gif.latex?%5Ccos%7Bx%7D"/> |   "COS"   |  COS  |
-| <img src="https://latex.codecogs.com/gif.latex?%5Ctan%7Bx%7D"/> |   "TAN"   |  TAN  |
-| <img src="https://latex.codecogs.com/gif.latex?%5Cln%7Bx%7D"/> |   "LN"    |  LN   |
-|  <img src="https://latex.codecogs.com/gif.latex?%7Cx%7C"/>   |   "ABS"   |  ABS  |
-| <img src="https://latex.codecogs.com/gif.latex?%5Csqrt%7Bx%7D"/> |  "SQRT"   | SQRT  |
-| <img src="https://latex.codecogs.com/gif.latex?%5Clfloor%7Bx%7D%5Crfloor"/> |  "CEIL"   | CEIL  |
-| <img src="https://latex.codecogs.com/gif.latex?%5Clceil%7Bx%7D%5Crceil"/> |  "FLOOR"  | FLOOR |
-| <img src="https://latex.codecogs.com/gif.latex?e%5E%7Bx%7D"/> |   "EXP"   |  EXP  |
-| <img src="https://latex.codecogs.com/gif.latex?%5Ctextrm%7Bmcd%7D%28x%2Cy%29"/> |   "MCD"   |  MCD  |
-| <img src="https://latex.codecogs.com/gif.latex?%5Ctextrm%7Brnd%7D%28x%2Cy%29"/> |   "RND"   |  RND  |
+| $$\sin x$$ |   "SEN"   |  SEN  |
+| $$\cos x$$ |   "COS"   |  COS  |
+| $$\tan x$$ |   "TAN"   |  TAN  |
+| $$\ln x$$ |   "LN"    |  LN   |
+| $$\mid x\mid$$   |   "ABS"   |  ABS  |
+| $$\sqrt x$$ |  "SQRT"   | SQRT  |
+| $$\lfloor x \rfloor$$ |  "CEIL"   | CEIL  |
+| $$\lceil x \rceil$$ |  "FLOOR"  | FLOOR |
+| $$\mathrm{e}^{x}$$ |   "EXP"   |  EXP  |
+| $$mcd(x)$$ |   "MCD"   |  MCD  |
+| $$rnd(x)$$ |   "RND"   |  RND  |
 
 #### Asignación a variables y obtención de valores<a name="asignacion"></a>
 
