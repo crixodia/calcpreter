@@ -29,13 +29,9 @@ simbolo *buscar(simbolo *t, char nombre[20])
 
 void imprimir(simbolo *t)
 {
-    printf("\t***********************************\n");
-    printf("\t         TABLA DE SIMBOLOS         \n");
-    printf("\t***********************************\n");
-    printf("\tESP\tID\tTIPO\tVALOR\tDIM\n", t->nombre, t->valor);
     while (t != NULL)
     {
-        printf("\tvar\t%s\tdouble\t%.2f\t0\n", t->nombre, t->valor);
+        printf("%s = %f\n", t->nombre, t->valor);
         t = t->sig;
     }
     printf("\n");

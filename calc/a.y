@@ -14,7 +14,8 @@
 
 %token <numero> NUMERO
 %token <ptrSimbolo> ID
-%token ASIG PRINT COS SEN TAN ABS LN SQRT CEIL FLOOR RND MCD EXP
+
+%token ASIG COS SEN TAN ABS LN SQRT CEIL FLOOR RND MCD EXP PRINT INFO PI LIST
 
 %type <numero> E A
 
@@ -23,9 +24,11 @@
 %right '^' '!'
 
 %%
-S   :S A ';'                { printf("<<%.2f\n",$2); }
-    |S PRINT E ';'          { printf(">> %.2f\n",$3); }
+S   :S A ';'                { ; }
+    |S ID INFO ';'          { printf("%s = %f\n",$2->nombre, $2->valor); }
+    |S E PRINT ';'          { printf("%f\n", $2); }
     |S error ';'            { yyerrok; }
+    |S LIST ';'             { imprimir(t); }
     |/*VACIO*/
     ;
 A   :ID ASIG E              {
@@ -57,6 +60,7 @@ E   :E '+' E		   	    { $$ = $1 + $3; }
     |SEN '(' E ')'    	    { $$ = sin($3); }
     |TAN '(' E ')'    	    { $$ = tan($3); }
     |ABS '(' E ')'    	    { $$ = fabs($3); }
+    |'|' E '|'    	        { $$ = fabs($2); }
     |EXP '(' E ')'    	    { $$ = exp($3); }
     |LN '(' E ')'		    { $$ = log($3); }
     |SQRT '(' E ')'		    { $$ = sqrt($3); }
@@ -68,6 +72,7 @@ E   :E '+' E		   	    { $$ = $1 + $3; }
 					        }
     |MCD '(' E ',' E ')'    { $$ = mcd($3,$5); }
     |ID                     { $$ = $1->valor; }
+    |PI                     { $$ = M_PI; }
     |NUMERO                 { $$ = $1; }
     ;
 %%
@@ -78,7 +83,7 @@ void main()
 {
     t = crear();
     yyparse ();
-    imprimir(t);
+    //imprimir(t);
 }
 
 int mcd(int a, int b){

@@ -1,10 +1,1 @@
-agua:800;
-iAgua:25;
-oAgua:30;
-t:15;
-
-?iAgua*t;
-?-oAgua*t;
-
-?agua+iAgua*t-oAgua*t;
-resp:agua+iAgua*t-oAgua*t
+sin(pi/3).print;
