@@ -35,5 +35,4 @@ void imprimir(simbolo *t)
         printf("%s = %f\n", t->nombre, t->valor);
         t = t->sig;
     }
-    printf("\n");
 };
