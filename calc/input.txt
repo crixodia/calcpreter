@@ -1,4 +1,5 @@
-a=10;
-b=cos(pi);
-c=a+b;
-.list;
+[a]=[1,1,1];
+[b]=[0,0,1];
+ang=acos([a]*[b]/|[a]|*|[b]|);
+moduloCruz=|[a]|*|[b]|*sin(ang);
+moduloCruz.info;

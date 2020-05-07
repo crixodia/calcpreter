@@ -37,9 +37,10 @@
 "rnd"                   { return RND; }
 "mcd"                   { return MCD; }
 "mcm"                   { return MCM; }
+"D("                    { return DISTANCE; }
 
-"#pi"|"#PI"               { return PI; }
-"#euler"|"#napier"        { return EULER; }
+"#pi"|"#PI"             { return PI; }
+"#euler"|"#napier"      { return EULER; }
 
 [0-9]+\.?[0-9]*         {
                             yylval.numero = strtod(yytext, NULL);
@@ -58,7 +59,7 @@
                         }
 
 \[[a-zA-Z][a-zA-Z0-9]*\]    {
-                                yylval.ptrSimboloVector = buscarVector(v, yytext);
+                            	yylval.ptrSimboloVector = buscarVector(v, yytext);
                                 if (yylval.ptrSimboloVector == NULL) {
                                     yylval.ptrSimboloVector = (simboloVector *) malloc(sizeof(simboloVector));
                                     strcpy(yylval.ptrSimboloVector->nombre, yytext);

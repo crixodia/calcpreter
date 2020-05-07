@@ -33,7 +33,7 @@
 
 %token ASIG PRINT INFO LIST CANONI CANONJ CANONK
 %token PI EULER
-%token ABS LN SQRT CEIL FLOOR RND MCD EXP LOG MCM
+%token ABS LN SQRT CEIL FLOOR RND MCD EXP LOG MCM DISTANCE
 %token COS SIN TAN ACOS ASIN ATAN COSH SINH TANH ACOSH ASINH ATANH
 
 %type <numero> E A
@@ -115,29 +115,41 @@ E:   E '+' E		   	    { $$ = $1 + $3; }
     |SQRT '(' E ')'		    { $$ = sqrt($3); }
     |CEIL '(' E ')'		    { $$ = ceil($3); }
     |FLOOR '(' E ')'	    { $$ = floor($3); }
-    |RND '(' E ',' E ')'    {
-                                srand(time(NULL));
-                                $$=rand()%(int)(($5-$3+1)+$3);
-		                    }
-    |MCD '(' E ',' E ')'    { $$ = mcd($3,$5); }
-    |MCM '(' E ',' E ')'    { $$ = mcm($3,$5); }
-    |V '*' V                { $$ = productoInterno($1, $3); }
-    |ABS '(' V ')'          { $$ = sqrt(productoInterno($3, $3)); }
-    |'|' V '|'              { $$ = sqrt(productoInterno($2, $2)); }
-    |PI                     { $$ = M_PI; }
-    |EULER                  { $$ = exp(1); }
-    |ID                     { $$ = $1->valor; }
-    |NUMERO                 { $$ = $1; }
+    |RND '(' E ',' E ')'        {
+                                    srand(time(NULL));
+                                    $$=rand()%(int)(($5-$3+1)+$3);
+		                        }
+    |MCD '(' E ',' E ')'        { $$ = mcd($3,$5); }
+    |MCM '(' E ',' E ')'        { $$ = mcm($3,$5); }
+    |V '*' V                    { $$ = productoInterno($1, $3); }
+    |ABS '(' V ')'              { $$ = sqrt(productoInterno($3, $3)); }
+    |'|' V '|'                  { $$ = sqrt(productoInterno($2, $2)); }
+    |DISTANCE V ',' V ')'       {
+                                    double temp[3];
+                                    memcpy(temp, $4, 3*sizeof(double));
+                                    escalarVector(temp, temp, -1.0);
+                                    sumaVector( temp, temp, $2);
+                                    $$ = sqrt(productoInterno(temp, temp));
+                                }
+    |DISTANCE E ',' E ')'       { $$ = fabs($4 - $2); }
+    |PI                         { $$ = M_PI; }
+    |EULER                      { $$ = exp(1); }
+    |ID                         { $$ = $1->valor; }
+    |NUMERO                     { $$ = $1; }
 ;
-V:   '[' E ',' E ',' E ']'  { $$[0] = $2; $$[1] = $4; $$[2] = $6; }
-    |'[' E ',' E ']'        { $$[0] = $2; $$[1] = $4; }
-    |'[' E ']'              { $$[0] = $2; }
-    |V '+' V                { sumaVector($$, $1, $3); }
-    |V '-' V                { escalarVector($3, $3, -1.0); sumaVector($$, $1, $3); }
-    |E '*' V                { escalarVector($$, $3, $1);}
-    |'-' V                  { escalarVector($2, $2, -1.0); }
-    |VECTOR                 { memcpy($$, $1->valor, 3*sizeof(double)); }
-    |VECT                   { memcpy($$, $1, 3*sizeof(double)); }
+V:   '[' E ',' E ',' E ']'      { $$[0] = $2; $$[1] = $4; $$[2] = $6; }
+    |'[' E ',' E ']'            { $$[0] = $2; $$[1] = $4; }
+    |'[' E ']'                  { $$[0] = $2; }
+    |V '+' V                    { sumaVector($$, $1, $3); }
+    |V '-' V                    { 
+                                    double temp[3];
+                                    escalarVector(temp, $3, -1.0);
+                                    sumaVector($$, $1, temp); 
+                                }
+    |E '*' V                    { escalarVector($$, $3, $1);}
+    |'-' V                      { escalarVector($$, $2, -1.0); }
+    |VECTOR                     { memcpy($$, $1->valor, 3*sizeof(double)); }
+    |VECT                       { memcpy($$, $1, 3*sizeof(double)); }
 ;
 %%
 #include "lex.yy.c"
