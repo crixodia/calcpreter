@@ -37,7 +37,10 @@
 "rnd"                   { return RND; }
 "mcd"                   { return MCD; }
 "mcm"                   { return MCM; }
-"D("                    { return DISTANCE; }
+"distance"              { return DISTANCE; }
+"nthPrime"              { return NTHPRI; }
+"nthFibonacci"          { return NTHFIB; }
+"vProduct"              { return VPROD; }
 
 "#pi"|"#PI"             { return PI; }
 "#euler"|"#napier"      { return EULER; }
