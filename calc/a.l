@@ -6,9 +6,14 @@
 ".j"                    { return CANONJ; }
 ".k"                    { return CANONK; }
 
+".clear"                { return CLEAR; }
 ".print"                { return PRINT; }
+".printd"               { return PRINTD; }
 ".info"                 { return INFO; }
+".infod"                { return INFOD; }
 ".list"                 { return LIST; }
+".listd"                { return LISTD; }
+".const"                { return CONSTANTES; }
 
 "cos"                   { return COS; }
 "acos"                  { return ACOS; }
@@ -43,7 +48,13 @@
 "vProduct"              { return VPROD; }
 
 "#pi"|"#PI"             { return PI; }
-"#euler"|"#napier"      { return EULER; }
+"#e"|"#napier"|"#euler" { return EULER; }
+"#G"                    { return GRAVITACIONAL; }
+"#k"                    { return COULOMB; }
+"#c"                    { return VLUZ; }
+"#elect"                { return ELECTRON; }
+"#prot"                 { return PROTON; }
+"#neut"                 { return NEUTRON; }
 
 [0-9]+\.?[0-9]*         {
                             yylval.numero = strtod(yytext, NULL);

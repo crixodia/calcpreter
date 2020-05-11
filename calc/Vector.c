@@ -27,6 +27,15 @@ void imprimirVector(simboloVector *t)
 {
     while (t != NULL)
     {
+        printf("%s = [%g, %g, %g]\n", t->nombre, t->valor[0], t->valor[1], t->valor[2]);
+        t = t->sig;
+    }
+};
+
+void imprimirVectorD(simboloVector *t)
+{
+    while (t != NULL)
+    {
         printf("%s = [%f, %f, %f]\n", t->nombre, t->valor[0], t->valor[1], t->valor[2]);
         t = t->sig;
     }

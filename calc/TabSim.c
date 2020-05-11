@@ -32,6 +32,15 @@ void imprimir(simbolo *t)
 {
     while (t != NULL)
     {
+        printf("%s = %g\n", t->nombre, t->valor);
+        t = t->sig;
+    }
+};
+
+void imprimirD(simbolo *t)
+{
+    while (t != NULL)
+    {
         printf("%s = %f\n", t->nombre, t->valor);
         t = t->sig;
     }

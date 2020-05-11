@@ -1,7 +1,14 @@
 %{
     #include "TabSim.c"
     #include "Vector.c"
+    
     #define M_PI 3.14159265358979323846
+    #define M_EULER 2.71828182845904523536
+    #define M_G 6.67430E-11
+    #define M_K 8.9875517923E9
+    #define M_ELECTRON -1.60218E-19
+    #define M_VLUZ 3E8
+
     simbolo * t;
     simboloVector * v;
 
@@ -18,6 +25,7 @@
     int nthPrimo(int n);
     int nthFibonacci(int n);
     void productoVectorial(double * target, double * a, double * b);
+    void imprimirConstantes();
 %}
 
 %union {
@@ -34,10 +42,16 @@
 %token <vector> VECT
 %token <ptrSimboloVector> VECTOR
 
-%token ASIG PRINT INFO LIST CANONI CANONJ CANONK
-%token PI EULER
-%token ABS LN SQRT CEIL FLOOR RND MCD EXP LOG MCM DISTANCE NTHPRI NTHFIB VPROD
-%token COS SIN TAN ACOS ASIN ATAN COSH SINH TANH ACOSH ASINH ATANH
+%token ASIG PRINT PRINTD INFO INFOD LIST LISTD CANONI CANONJ CANONK 
+%token CONSTANTES CLEAR
+
+%token PI EULER GRAVITACIONAL COULOMB ELECTRON PROTON NEUTRON VLUZ
+
+%token COS SIN TAN ACOS ASIN ATAN COSH SINH TANH ACOSH 
+%token ASINH ATANH
+
+%token ABS LN SQRT CEIL FLOOR RND MCD EXP LOG MCM
+%token DISTANCE NTHPRI NTHFIB VPROD
 
 %type <numero> E A
 %type <vector> V AV
@@ -48,12 +62,19 @@
 
 %%
 S:   S A ';'                    { ; }
-    |S ID INFO ';'              { printf("%s = %f\n",$2->nombre, $2->valor); }
-    |S E PRINT ';'              { printf("%f\n", $2); }
+    |S ID INFO ';'              { printf("%s = %g\n",$2->nombre, $2->valor); }
+    |S ID INFOD ';'             { printf("%s = %f\n",$2->nombre, $2->valor); }
+    |S E PRINT ';'              { printf("%g\n", $2); }
+    |S E PRINTD ';'             { printf("%f\n", $2); }
     |S AV ';'                   { ; }
-    |S VECTOR INFO ';'          { printf("%s = [%f, %f, %f]\n",$2->nombre, $2->valor[0], $2->valor[1], $2->valor[2]); }
-    |S V PRINT ';'              { printf("%f,%f,%f\n", $2[0], $2[1], $2[2]); }
+    |S VECTOR INFO ';'          { printf("%s = [%g, %g, %g]\n",$2->nombre, $2->valor[0], $2->valor[1], $2->valor[2]); }
+    |S VECTOR INFOD ';'         { printf("%s = [%f, %f, %f]\n",$2->nombre, $2->valor[0], $2->valor[1], $2->valor[2]); }
+    |S V PRINT ';'              { printf("%g, %g, %g\n", $2[0], $2[1], $2[2]); }
+    |S V PRINTD ';'             { printf("%f, %f, %f\n", $2[0], $2[1], $2[2]); }
     |S LIST ';'                 { imprimir(t); imprimirVector(v); }
+    |S LISTD ';'                { imprimirD(t); imprimirVectorD(v); }
+    |S CONSTANTES ';'           { imprimirConstantes(); }
+    |S CLEAR ';'                { v = NULL; t = NULL; }
     |S error ';'                { yyerrok; }
     |/**/
 ;
@@ -141,7 +162,13 @@ E:   E '+' E		   	        { $$ = $1 + $3; }
     |NTHPRI '(' E ')'           { $$ = nthPrimo((int)$3); }
     |NTHFIB '(' E ')'           { $$ = nthFibonacci((int)$3); }
     |PI                         { $$ = M_PI; }
-    |EULER                      { $$ = exp(1); }
+    |GRAVITACIONAL              { $$ = M_G; }
+    |COULOMB                    { $$ = M_K; }
+    |VLUZ                       { $$ = M_VLUZ; }
+    |ELECTRON                   { $$ = M_ELECTRON; }
+    |PROTON                     { $$ = -M_ELECTRON; }
+    |NEUTRON                    { $$ = 0; }
+    |EULER                      { $$ = M_EULER; }
     |ID                         { $$ = $1->valor; }
     |NUMERO                     { $$ = $1; }
 ;
@@ -234,6 +261,19 @@ void productoVectorial(double * target, double * a, double * b){
     target[0]=a[1]*b[2] - a[2]*b[1];
     target[1]=a[2]*b[0] - a[0]*b[2];
     target[2]=a[0]*b[1] - a[1]*b[0];
+}
+
+void imprimirConstantes(){
+    printf("Command\t\t\tValue\t\tDescription\n\n");
+    printf("#pi\t#PI\t\t%g\t\tPi number\n", M_PI);
+    printf("#e\t#euler\t#napier\t%g\t\te number\n", M_EULER);
+    printf("#G\t\t\t%g\tGravitational constant\n", M_G);
+    printf("#k\t\t\t%g\tCoulomb constant\n", M_K);
+    printf("#c\t\t\t%g\t\tLight speed constant\n", M_VLUZ);
+    printf("#elect\t\t\t%g\tElectron charge\n", M_ELECTRON);
+    printf("#prot\t\t\t%g\tProton charge\n", -M_ELECTRON);
+    printf("#neut\t\t\t%g\t\tNeutron charge\n", 0.0);
+    printf("*Using International System of Units (SI)\n");
 }
 
 int yyerror(){
