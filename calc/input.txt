@@ -1,5 +1,7 @@
-[a]=[1,1,1];
+//Prueba comentarios;
+[a]=[1,1,1];    //Vector;
 [b]=[0,0,1];
 ang=acos([a]*[b]/|[a]|*|[b]|);
 moduloCruz=|[a]|*|[b]|*sin(ang);
 moduloCruz.info;
+//moduloCruz.print;

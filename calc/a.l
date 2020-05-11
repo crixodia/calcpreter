@@ -84,6 +84,7 @@
                                 }
                                 return VECTOR;
                             }
+\/\/.*;                 { ; }
 [ \b\t\n]+              { ; }
 .                       { return yytext[0]; }
 %%
