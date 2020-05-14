@@ -1,7 +1,6 @@
 %{
     #include "TabSim.c"
     #include "Vector.c"
-    #include "Complejo.c"
     
     #define M_PI 3.14159265358979323846
     #define M_EULER 2.71828182845904523536
