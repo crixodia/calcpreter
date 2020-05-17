@@ -1,4 +1,5 @@
 %{
+    //Tipos de dato
     #include "TabSim.c"
     #include "Vector.c"
     
@@ -9,16 +10,16 @@
     #define M_ELECTRON -1.60218E-19
     #define M_VLUZ 3E8
 
+    //Tablas de símbolo
     simbolo * t;
     simboloVector * v;
 
+    //Prototipos
     int yylex(void);
     int yyerror();
-
     int factorial(int);
     int mcd(int, int);
     int mcm(int, int);
-    
     void sumaVector(double * target, double * a, double * b);
     void escalarVector(double * target, double * a, double esc);
     double productoInterno(double * a, double * b);
@@ -43,9 +44,12 @@
 %token <ptrSimboloVector> VECTOR
 
 %token ASIG PRINT PRINTD INFO INFOD LIST LISTD CANONI CANONJ CANONK 
-%token CONSTANTES CLEAR
+%token CONSTANTES CLEAR TO
 
 %token PI EULER GRAVITACIONAL COULOMB ELECTRON PROTON NEUTRON VLUZ
+
+%token KILO
+%token METRO
 
 %token COS SIN TAN ACOS ASIN ATAN COSH SINH TANH ACOSH 
 %token ASINH ATANH
@@ -61,6 +65,7 @@
 %right '^' '!'
 
 %%
+//Expresiones
 S:   S A ';'                    { ; }
     |S ID INFO ';'              { printf("%s = %g\n",$2->nombre, $2->valor); }
     |S ID INFOD ';'             { printf("%s = %f\n",$2->nombre, $2->valor); }
@@ -78,6 +83,8 @@ S:   S A ';'                    { ; }
     |S error ';'                { yyerrok; }
     |/**/
 ;
+
+//Asignaciones
 A:   ID ASIG E                  {
                                     $$ = $3;
                                     $1->valor = $3;
@@ -87,6 +94,8 @@ A:   ID ASIG E                  {
                                     $1->valor = $3;
                                 }
 ;
+
+//Asignaciones a vectores
 AV:  VECTOR ASIG V              {
                                     memcpy($$, $3, 3*sizeof(double));
                                     $1->valor[0] = $3[0];
@@ -103,6 +112,8 @@ AV:  VECTOR ASIG V              {
     |VECTOR CANONJ ASIG E       { $1->valor[1] = $4; }
     |VECTOR CANONK ASIG E       { $1->valor[2] = $4; }
 ;
+
+//Operaciones con escalares
 E:   E '+' E		   	        { $$ = $1 + $3; }
     |E '-' E			        { $$ = $1 - $3; }
     |E '*' E			        { $$ = $1 * $3; }
@@ -119,6 +130,13 @@ E:   E '+' E		   	        { $$ = $1 + $3; }
     |'-' E			            { $$ = -$2; }
     |E '%' E			        { $$ = (int)$1 % (int)$3; }
     |E '!'			            { $$ = factorial($1); }
+    
+    //Asignación a vectores
+    |VECTOR CANONI              { $$ = $1->valor[0]; }
+    |VECTOR CANONJ              { $$ = $1->valor[1]; }
+    |VECTOR CANONK              { $$ = $1->valor[2]; }
+
+    //Funciones trigonométricas
     |COS '(' E ')'    	        { $$ = cos($3); }
     |ACOS '(' E ')'             { $$ = acos($3); }
     |COSH '(' E ')'             { $$ = cosh($3); }
@@ -131,6 +149,8 @@ E:   E '+' E		   	        { $$ = $1 + $3; }
     |ATAN '(' E ')'             { $$ = atan($3); }
     |TANH '(' E ')'             { $$ = tanh($3); }
     |ATANH '(' E ')'            { $$ = atanh($3); }
+
+    //Funciones
     |ABS '(' E ')'    	        { $$ = fabs($3); }
     |'|' E '|'    	            { $$ = fabs($2); }
     |EXP '(' E ')'    	        { $$ = exp($3); }
@@ -145,6 +165,10 @@ E:   E '+' E		   	        { $$ = $1 + $3; }
 		                        }
     |MCD '(' E ',' E ')'        { $$ = mcd($3,$5); }
     |MCM '(' E ',' E ')'        { $$ = mcm($3,$5); }
+    |NTHPRI '(' E ')'           { $$ = nthPrimo((int)$3); }
+    |NTHFIB '(' E ')'           { $$ = nthFibonacci((int)$3); }
+
+    //Funciones vectoriales escalares
     |V '*' V                    { $$ = productoInterno($1, $3); }
     |ABS '(' V ')'              { $$ = sqrt(productoInterno($3, $3)); }
     |'|' V '|'                  { $$ = sqrt(productoInterno($2, $2)); }
@@ -156,11 +180,12 @@ E:   E '+' E		   	        { $$ = $1 + $3; }
                                     $$ = sqrt(productoInterno(temp, temp));
                                 }
     |DISTANCE '(' E ',' E ')'   { $$ = fabs($5 - $3); }
-    |VECTOR CANONI              { $$ = $1->valor[0]; }
-    |VECTOR CANONJ              { $$ = $1->valor[1]; }
-    |VECTOR CANONK              { $$ = $1->valor[2]; }
-    |NTHPRI '(' E ')'           { $$ = nthPrimo((int)$3); }
-    |NTHFIB '(' E ')'           { $$ = nthFibonacci((int)$3); }
+
+    //Conversiones
+    |'(' E ')' KILO TO METRO    { printf("cnv\n"); }
+    |'(' E ')' METRO TO KILO    { printf("cnv\n"); }
+
+    //Constantes
     |PI                         { $$ = M_PI; }
     |GRAVITACIONAL              { $$ = M_G; }
     |COULOMB                    { $$ = M_K; }
@@ -169,9 +194,12 @@ E:   E '+' E		   	        { $$ = $1 + $3; }
     |PROTON                     { $$ = -M_ELECTRON; }
     |NEUTRON                    { $$ = 0; }
     |EULER                      { $$ = M_EULER; }
+
     |ID                         { $$ = $1->valor; }
     |NUMERO                     { $$ = $1; }
 ;
+
+//Operaciones con vectores
 V:   '[' E ',' E ',' E ']'      { $$[0] = $2; $$[1] = $4; $$[2] = $6; }
     |'[' E ',' E ']'            { $$[0] = $2; $$[1] = $4; }
     |'[' E ']'                  { $$[0] = $2; }
@@ -183,9 +211,11 @@ V:   '[' E ',' E ',' E ']'      { $$[0] = $2; $$[1] = $4; $$[2] = $6; }
                                 }
     |E '*' V                    { escalarVector($$, $3, $1);}
     |'-' V                      { escalarVector($$, $2, -1.0); }
-    |VPROD '(' V ',' V ')'      { productoVectorial($$, $3, $5); }
     |VECTOR                     { memcpy($$, $1->valor, 3*sizeof(double)); }
     |VECT                       { memcpy($$, $1, 3*sizeof(double)); }
+
+    //Funciones vectoriales
+    |VPROD '(' V ',' V ')'      { productoVectorial($$, $3, $5); }
 ;
 %%
 #include "lex.yy.c"
@@ -198,32 +228,36 @@ int main()
     return 0;
 }
 
-//Maximo comun divisor
+//Máximo comun divisor
 int mcd(int a, int b){
 	return b == 0 ? a : mcd(b, a % b);
 }
 
-//Minimo comun multiplo
+//Mínimo comun multiplo
 int mcm(int a, int b){
     return (a*b)/mcd(a,b);
 }
 
+//Factorial de un número
 int factorial (int n){
 	return n == 0 ? 1 : factorial(n - 1) * n;
 }
 
+//Escalar por vector
 void escalarVector(double * target, double * a, double esc){
     for(int i = 0; i<3; i++){
         target[i] = esc *a[i];
     }
 }
 
+//Suma de vectores
 void sumaVector(double * target, double * a, double *b){
     for(int i = 0; i<3; i++){
         target[i] = a[i] + b[i];
     }
 }
 
+//Producto punto entre vectores
 double productoInterno(double * a, double * b){
     double r = 0;
     for(int i = 0; i< 3; i++){
@@ -263,6 +297,7 @@ void productoVectorial(double * target, double * a, double * b){
     target[2]=a[0]*b[1] - a[1]*b[0];
 }
 
+//Imprime una tabla con las constantes matemáticas en el sistema internacional
 void imprimirConstantes(){
     printf("Command\t\t\tValue\t\tDescription\n\n");
     printf("#pi\t#PI\t\t%g\t\tPi number\n", M_PI);
