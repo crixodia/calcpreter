@@ -40,3 +40,43 @@ void imprimirVectorD(simboloVector *t)
         t = t->sig;
     }
 };
+
+//Escalar por vector
+void escalarVector(double *target, double *a, double esc)
+{
+    int i;
+    for (i = 0; i < 3; i++)
+    {
+        target[i] = esc * a[i];
+    }
+}
+
+//Suma de vectores
+void sumaVector(double *target, double *a, double *b)
+{
+    int i;
+    for (i = 0; i < 3; i++)
+    {
+        target[i] = a[i] + b[i];
+    }
+}
+
+//Producto punto entre vectores
+double productoInterno(double *a, double *b)
+{
+    double r = 0;
+    int i;
+    for (i = 0; i < 3; i++)
+    {
+        r += a[i] * b[i];
+    }
+    return r;
+}
+
+//Producto cruz o vectorial
+void productoVectorial(double *target, double *a, double *b)
+{
+    target[0] = a[1] * b[2] - a[2] * b[1];
+    target[1] = a[2] * b[0] - a[0] * b[2];
+    target[2] = a[0] * b[1] - a[1] * b[0];
+}

@@ -1,0 +1,5 @@
+//Este es un programa de ejemplo;
+a=#pi;          //Una constante;
+[a]=[a,2,3];    //equivale a [1,2,3];
+.list;          //Muestra todo lo declarado;
+//Fin de programa de ejemplo;

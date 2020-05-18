@@ -1,8 +1,16 @@
+#define M_PI 3.14159265358979323846
+#define M_EULER 2.71828182845904523536
+#define M_G 6.67430E-11
+#define M_K 8.9875517923E9
+#define M_ELECTRON -1.60218E-19
+#define M_VLUZ 3E8
+
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
 typedef struct simbolo
 {
     struct simbolo *sig;
@@ -45,3 +53,66 @@ void imprimirD(simbolo *t)
         t = t->sig;
     }
 };
+
+//Enésimo número primo
+int nthPrimo(int n)
+{
+    int i, k = 1, f = 2, counter = 0, primo = -1;
+    while (f <= n || k <= n)
+    {
+        counter = 0;
+        for (i = 1; i <= f; i++)
+        {
+            if (f % i == 0)
+            {
+                counter++;
+            }
+        }
+        if (counter <= 2)
+        {
+            primo = f;
+            k++;
+        }
+        f++;
+    }
+    return primo;
+}
+
+//Enésimo de la sucesión de Fibonacci
+int nthFibonacci(int n)
+{
+    return n < 2 ? n : nthFibonacci(n - 1) + nthFibonacci(n - 2);
+}
+
+//Máximo comun divisor
+int mcd(int a, int b)
+{
+    return b == 0 ? a : mcd(b, a % b);
+}
+
+//Mínimo comun multiplo
+int mcm(int a, int b)
+{
+    return (a * b) / mcd(a, b);
+}
+
+//Factorial de un número
+int factorial(int n)
+{
+    return n == 0 ? 1 : factorial(n - 1) * n;
+}
+
+//Imprime una tabla con las constantes matemáticas en el sistema internacional
+void imprimirConstantes()
+{
+    printf("Command\t\t\tValue\t\tDescription\n\n");
+    printf("#pi\t#PI\t\t%g\t\tPi number\n", M_PI);
+    printf("#e\t#euler\t#napier\t%g\t\te number\n", M_EULER);
+    printf("#G\t\t\t%g\tGravitational constant\n", M_G);
+    printf("#k\t\t\t%g\tCoulomb constant\n", M_K);
+    printf("#c\t\t\t%g\t\tLight speed constant\n", M_VLUZ);
+    printf("#elect\t\t\t%g\tElectron charge\n", M_ELECTRON);
+    printf("#prot\t\t\t%g\tProton charge\n", -M_ELECTRON);
+    printf("#neut\t\t\t%g\t\tNeutron charge\n", 0.0);
+    printf("*Using International System of Units (SI)\n");
+}

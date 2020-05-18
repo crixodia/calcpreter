@@ -1,2 +1,0 @@
-moduloCruz = 1.414214
-moduloCruz = 1.414214

@@ -368,22 +368,22 @@ static const flex_int16_t yy_accept[173] =
         0,    0,   57,   55,   54,   54,   55,   55,   55,   55,
        50,    1,   51,   55,   51,   51,   51,   51,   51,   40,
        51,   41,   51,   51,   51,   51,   51,   54,   44,    0,
-       46,   43,   45,    0,    0,   39,    0,    2,    3,    4,
+       46,   43,   45,    0,    0,    2,    0,    3,    4,    5,
         0,    0,    0,   50,   50,   51,    0,   51,   51,   51,
-       51,   51,   51,   51,   51,   51,   30,   51,   51,   51,
-       51,   51,   51,   51,   51,   21,   51,   42,    0,    0,
+       51,   51,   51,   51,   51,   51,   31,   51,   51,   51,
+       51,   51,   51,   51,   51,   22,   51,   42,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,   53,
-       50,    0,   52,   25,   51,   51,   51,   51,   22,   51,
-       13,   51,   29,   51,   31,   33,   34,   51,   32,   17,
+       50,    0,   52,   26,   51,   51,   51,   51,   23,   51,
+       14,   51,   30,   51,   32,   34,   35,   51,   33,   18,
 
-       17,   51,   21,   23,   51,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,   14,   18,   18,   22,   24,
-       27,   15,   51,   51,   51,   51,   19,   26,   51,    0,
-        0,    0,   49,   48,    0,    0,    8,   10,    0,   16,
-       20,   51,   28,   51,   51,   51,   47,   43,    0,    5,
-       12,    9,   11,    6,   51,   51,   51,   51,    7,   51,
-       51,   51,   51,   35,   51,   36,   38,   51,   51,   51,
-       37,    0
+       18,   51,   22,   24,   51,    0,    0,    0,    0,    0,
+        0,    0,    0,    0,    0,   15,   19,   19,   23,   25,
+       28,   16,   51,   51,   51,   51,   20,   27,   51,    0,
+        0,    0,   49,   48,    0,    0,    9,   11,    0,   17,
+       21,   51,   29,   51,   51,   51,   47,   43,    0,    6,
+       13,   10,   12,    7,   51,   51,   51,   51,    8,   51,
+       51,   51,   51,   36,   51,   37,   39,   51,   51,   51,
+       38,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -835,269 +835,269 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 5 "a.l"
-{ return CANONI; }
+#line 4 "a.l"
+{ return TO; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 6 "a.l"
-{ return CANONJ; }
+{ return CANONI; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 7 "a.l"
-{ return CANONK; }
+{ return CANONJ; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 9 "a.l"
-{ return CLEAR; }
+#line 8 "a.l"
+{ return CANONK; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 10 "a.l"
-{ return PRINT; }
+{ return CLEAR; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 11 "a.l"
-{ return PRINTD; }
+{ return PRINT; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 12 "a.l"
-{ return INFO; }
+{ return PRINTD; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 13 "a.l"
-{ return INFOD; }
+{ return INFO; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 14 "a.l"
-{ return LIST; }
+{ return INFOD; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 15 "a.l"
-{ return LISTD; }
+{ return LIST; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 16 "a.l"
-{ return CONSTANTES; }
+{ return LISTD; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 18 "a.l"
-{ return COS; }
+#line 17 "a.l"
+{ return CONSTANTES; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 19 "a.l"
-{ return ACOS; }
+{ return COS; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 20 "a.l"
-{ return COSH; }
+{ return ACOS; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 21 "a.l"
-{ return ACOSH; }
+{ return COSH; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 23 "a.l"
-{ return SIN; }
+#line 22 "a.l"
+{ return ACOSH; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 24 "a.l"
-{ return ASIN; }
+{ return SIN; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 25 "a.l"
-{ return SINH; }
+{ return ASIN; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 26 "a.l"
-{ return ASINH; }
+{ return SINH; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 28 "a.l"
-{ return TAN; }
+#line 27 "a.l"
+{ return ASINH; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 29 "a.l"
-{ return ATAN; }
+{ return TAN; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 30 "a.l"
-{ return TANH; }
+{ return ATAN; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 31 "a.l"
-{ return ATANH; }
+{ return TANH; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 33 "a.l"
-{ return ABS; }
+#line 32 "a.l"
+{ return ATANH; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 34 "a.l"
-{ return SQRT; }
+{ return ABS; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 35 "a.l"
-{ return CEIL; }
+{ return SQRT; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 36 "a.l"
-{ return FLOOR; }
+{ return CEIL; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 38 "a.l"
-{ return EXP; }
+#line 37 "a.l"
+{ return FLOOR; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 39 "a.l"
-{ return LN; }
+{ return EXP; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 40 "a.l"
-{ return LOG; }
+{ return LN; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 42 "a.l"
-{ return RND; }
+#line 41 "a.l"
+{ return LOG; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 43 "a.l"
-{ return MCD; }
+{ return RND; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 44 "a.l"
-{ return MCM; }
+{ return MCD; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 45 "a.l"
-{ return DISTANCE; }
+{ return MCM; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 46 "a.l"
-{ return NTHPRI; }
+{ return DISTANCE; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 47 "a.l"
-{ return NTHFIB; }
+{ return NTHPRI; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 48 "a.l"
-{ return VPROD; }
+{ return NTHFIB; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 50 "a.l"
-{ return TO; }
+#line 49 "a.l"
+{ return VPROD; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 52 "a.l"
+#line 51 "a.l"
 { return KILO; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 54 "a.l"
-{ return METRO;}
+#line 53 "a.l"
+{ return METRO; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 56 "a.l"
+#line 55 "a.l"
 { return PI; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 57 "a.l"
+#line 56 "a.l"
 { return EULER; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 58 "a.l"
+#line 57 "a.l"
 { return GRAVITACIONAL; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 59 "a.l"
+#line 58 "a.l"
 { return COULOMB; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 60 "a.l"
+#line 59 "a.l"
 { return VLUZ; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 61 "a.l"
+#line 60 "a.l"
 { return ELECTRON; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 62 "a.l"
+#line 61 "a.l"
 { return PROTON; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 63 "a.l"
+#line 62 "a.l"
 { return NEUTRON; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 65 "a.l"
+#line 64 "a.l"
 {
-                            yylval.numero = strtod(yytext, NULL);
-                            return NUMERO;
-                        }
+                                yylval.numero = strtod(yytext, NULL);
+                                return NUMERO;
+                            }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 70 "a.l"
+#line 69 "a.l"
 {
-                            yylval.ptrSimbolo = buscar(t, yytext);
-                            if (yylval.ptrSimbolo == NULL) {
-                                yylval.ptrSimbolo = (simbolo *) malloc(sizeof(simbolo));
-                                strcpy(yylval.ptrSimbolo->nombre, yytext);
-                                yylval.ptrSimbolo->valor = 0;
-                                insertar(&t, yylval.ptrSimbolo);
+                                yylval.ptrSimbolo = buscar(t, yytext);
+                                if (yylval.ptrSimbolo == NULL) {
+                                    yylval.ptrSimbolo = (simbolo *) malloc(sizeof(simbolo));
+                                    strcpy(yylval.ptrSimbolo->nombre, yytext);
+                                    yylval.ptrSimbolo->valor = 0;
+                                    insertar(&t, yylval.ptrSimbolo);
+                                }
+                                return ID;
                             }
-                            return ID;
-                        }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 81 "a.l"
+#line 80 "a.l"
 {
                             	yylval.ptrSimboloVector = buscarVector(v, yytext);
                                 if (yylval.ptrSimboloVector == NULL) {
@@ -1113,23 +1113,23 @@ YY_RULE_SETUP
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 93 "a.l"
+#line 92 "a.l"
 { ; }
 	YY_BREAK
 case 54:
 /* rule 54 can match eol */
 YY_RULE_SETUP
-#line 94 "a.l"
+#line 93 "a.l"
 { ; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 95 "a.l"
+#line 94 "a.l"
 { return yytext[0]; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 96 "a.l"
+#line 95 "a.l"
 ECHO;
 	YY_BREAK
 #line 1136 "lex.yy.c"
@@ -2137,6 +2137,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 96 "a.l"
+#line 95 "a.l"
 
 
