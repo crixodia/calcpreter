@@ -1,9 +1,9 @@
-# Calcpreter
+<div style="text-align:justify;">
 
+# Calcpreter
 Calcpreter es una calculadora con funciones básicas implementadas que podrás usar en la CLI. Podrás guardar variables durante la ejecución y operar con números reales o con vectores en 3 dimensiones.
 
 ## Contenido
-
 * [Compilación desde código fuente](#compilación-desde-código-fuente)
 * [Sintaxis](#sintaxis)
 * [Tipos](#tipos)
@@ -21,7 +21,9 @@ Calcpreter es una calculadora con funciones básicas implementadas que podrás u
 
 ## Compilación desde código fuente
 Para compilar en windows es necesario Yacc/Bison, Lex, GCC. Los puedes instalar con el siguiente comando.
+
 ### Linux
+Dependencias
 ```shell
 sudo apt-get install bison && sudo apt-get install lex && sudo apt-get install gcc
 ```
@@ -41,7 +43,6 @@ lex a.l && yacc a.y && gcc y.tab.c -lm -o calcpreter
 ```shell
 ./calcpreter.out
 ```
-
 ## Sintaxis
 Luego de cada asignación, comando, o expresión algebraica, es necesario cerrar la instrucción con `;` tal y como se muestra a continuación.
 ```F#
@@ -88,17 +89,31 @@ De manera análoga, se puede alterar el valor de las componentes de un vector.
 [a].i = [a].j + [a].k;        //[a] = [23.1416, 20, pi];
 ```
 ### Múltiples asignaciones
-
 Es posible asignar un solo valor a diferentes variables en una sola línea.
-
 ```F#
 a = b = c = 10;
 [a] = [b] = [c] = [#e, #pi, #G];
 c = [c].i = a;
 ```
 ## Comandos
-## Mostrando valores en pantalla
+
+### Mostrando valores en pantalla
 ## Constantes
+
+Puedes obtener el valor de una constante precediendo su identificador de `#` o incluso obtener su valor por pantalla directamente con el [comando](#comandos) .print
+
+```F#
+pi = #pi;
+a = #e;
+#G.print;   //Mostará el valor de la constante gravitacional en el SI;
+```
+Aquí tienes una tabla con todas las constantes disponibles (Usando el sistema internacional).
+
+|Constante|Expresión|||Descripción|
+|:---:|---|---|---|---|
+|![equation](https://latex.codecogs.com/svg.latex?\pi)|#pi|||Constante matemática π|
+|![equation](https://latex.codecogs.com/svg.latex?e)|#e|#euler|#napier|Número de Euler|
+|![equation](https://latex.codecogs.com/svg.latex?G)|#G|||Constante gravitacional|
 ## Expresiones algebraicas
 ## Operaciones con reales
 ## Operaciones con vectores
@@ -106,3 +121,5 @@ c = [c].i = a;
 ### Conversión de unidades
 ## Scripts
 ### Comentarios
+
+</div>
