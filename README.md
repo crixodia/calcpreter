@@ -46,7 +46,7 @@ cd calcpreter/calc
 Compilación lex/yacc/gcc
 
 ```shell
-lex a.l && yacc a.y && gcc y.tab.c -lm -o calcpreter
+lex a.l && yacc a.y && gcc y.tab.c -lm -o calcpreter.out
 ```
 
 #### Ejecutarás calcpreter
@@ -187,14 +187,35 @@ Aquí tienes una tabla con todas las constantes disponibles (Usando el sistema i
 
 ## Expresiones algebraicas
 
+
+
 ## Operaciones con reales
+
+
 
 ## Operaciones con vectores
 
+
+
 ## Funciones integradas
+
+
 
 ### Conversión de unidades
 
+
+
 ## Scripts
 
+Puedes scribir tus propios scripts en un archivo como en [input.txt]()
+
 ### Comentarios
+
+Solo es posible comentarios de una sola línea con el siguiente formato
+
+```F#
+//Este es un comentario;
+a = 0; //Notarás que finaliza con ;
+```
+
+No es posible usar `;` en medio de un comentario `//Esto no ; es posible;`
