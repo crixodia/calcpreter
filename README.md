@@ -11,11 +11,8 @@ Calcpreter es una calculadora con funciones básicas implementadas que podrás u
 * [Comandos](#comandos)
   * [Mostrando valores en pantalla](#mostrando-valores-en-pantalla)
 * [Constantes](#constantes)
-* [Expresiones algebraicas](#expresiones-algebraicas)
-* [Operaciones con reales](#operaciones-con-reales)
-* [Operaciones con vectores](#operaciones-con-vectores)
+* [Expresiones algebraicas y operaciones](#expresiones-algebraicas-y-operaciones)
 * [Funciones integradas](#funciones-integradas)
-  * [Conversión de unidades](#conversión-de-unidades)
 * [Scripts](#scripts)
   * [Comentarios](#comentarios)
 
@@ -185,29 +182,59 @@ Aquí tienes una tabla con todas las constantes disponibles (Usando el sistema i
 |![equation](https://latex.codecogs.com/svg.latex?-e)|#elect|||Carga de un electrón|
 |![equation](https://latex.codecogs.com/svg.latex?+e)|#prot|||Carga de un protón|
 
-## Expresiones algebraicas
-
-
-
-## Operaciones con reales
-
-
-
-## Operaciones con vectores
+## Expresiones algebraicas y operaciones
 
 
 
 ## Funciones integradas
 
+Para usar estas funciones es necesario usar paréntesis `(x)`. Salvo para valor absoluto en la que puedes usar barras `|x|` o `abs(x)`. Encontrarás funciones de dos parámetros de tipo `rnd(x, y)` en la que se tomarán dos expresiones.
 
+|Función|Alternativa|Descripción|Retorno|
+|---|---|---|---|
+|``cos(x)``||Función coseno|real|
+|``acos(x)``||Arcocoseno|real|
+|``cosh(x)``||Coseno hiperbólico|real|
+|`acosh(x)`||Coseno hiérbólico inverso|real|
+|`sin(x)`|`sen(x)`|Función seno|real|
+|`asin(x)`|`asen(x)`|Arcoseno|real|
+|`sinh(x)`|`senh(x)`|Seno hipebólico|real|
+|`asinh(x)`|`asenh(x)`|Seno hiperbólico inverso|real|
+|`tan(x)`|`tg(x)`|Función tangente|real|
+|`atan(x)`|`atg(x)`|Arcotangente|real|
+|`tanh(x)`|`tgh(x)`|Tangente hiperbólico|real|
+|`atanh(x)`|`atgh(x)`|Arcotangente hiperbólico|real|
+|`abs(x)`|`|x|`|Valor absoluto|real|
+|`sqrt(x)`||Raíz cuadrada|real|
+|`ceil(x)`||Función techo|real|
+|`floor(x)`||Función suelo|real|
+|`exp(x)`||Función exponencial|real|
+|`ln(x)`||Función logaritmo natural|real|
+|`log(x, y)`||Logaritmo base y de x|real|
+|`rnd(a, b)`||Número aleatorio entre a y b|real|
+|`mcm(a, b)`||Mínimo común múltiplo entre a y b|real|
+|`mcd(a, b)`||Máximo común divisor entre a y b|real|
+|`distance(a, b)`|`distance([a], [b])`|Distancia entre a y b|real|
+|`nthPrime(x)`||Enésimo número primo|real|
+|`nthFibonacci(x)`||Enésimo número de la sucesión de Fibonacci|real|
+|`vProduct([a], [b])`||Producto vectorial|vector|
 
-### Conversión de unidades
+### Ejemplos
 
-
+```shell
+[a] = vProduct([1,2,3],[#pi,rnd(5,10),cos(#pi)]];
+a = |-5|;
+b = distance([1,2,3],[4,5,6]);
+c = distance(10,20);
+```
 
 ## Scripts
 
-Puedes scribir tus propios scripts en un archivo como en [input.txt]()
+Puedes scribir tus propios scripts en un archivo. Y ejecutarlos a través de la línea de comandos.
+
+```shell
+./calcshell.out < input.txt >> output.txt
+```
 
 ### Comentarios
 
