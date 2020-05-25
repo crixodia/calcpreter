@@ -18,8 +18,6 @@ Calcpreter es una calculadora con funciones básicas implementadas que podrás u
 
 ## Compilación desde código fuente
 
-Para compilar en windows es necesario Yacc/Bison, Lex, GCC. Los puedes instalar con el siguiente comando.
-
 ### Linux
 
 Dependencias
@@ -76,7 +74,7 @@ a = #e;
 
 ### Vectores
 
-Los vectores se declaran con su identificador entre corchetes. En caso de usar su identificador sin un valor concreto se creará el arreglo con el valor por defecto `[0, 0, 0]`.
+Los vectores se declaran con su identificador entre corchetes. En caso de usar su identificador sin un valor concreto tendrá un valor por defecto `[0, 0, 0]`.
 
 ```F#
 [a] = [1, c, 3];
@@ -96,7 +94,7 @@ Puedes usar otras variables o [constantes](#constantes) para los elementos del v
 [b] = [#e];
 ```
 
-En el ejemplo anterior notarás que un identificador de un número real no causará problemas en el identificador de un vector. Podrás tener una variable `a` y un vector `[a]` simultáneamente durante la ejecución de **calcpreter**.
+Un identificador de un número real no causará problemas en el identificador de un vector. Podrás tener una variable `a` y un vector `[a]` simultáneamente durante la ejecución de **calcpreter**.
 
 #### Accediendo a las componentes de un vector
 
@@ -184,7 +182,21 @@ Aquí tienes una tabla con todas las constantes disponibles (Usando el sistema i
 
 ## Expresiones algebraicas y operaciones
 
+Para números reales están permitidas las operaciones clásicas del algebra como suma `+`, resta `-`, multiplicación `*`, división `/`, potenciación `^`, módulo `%` y factorial `!`. A continuación tienes un ejemplo con anidaciones de paréntesis y todos lo operadores mencionados.
 
+```F#
+valor = ((((1+2)-3)*4/5)^6)%7!;
+```
+Es necesario recordar que el símbolo factorial va después del número entero a operar `5!`.
+
+En cuanto a vectores, las operaciones permitidas son: suma `+`, resta `-`, producto interno o punto `*`. El producto punto da como resultado un real. Por tanto deberás asignar esta operación a un identificador de ese tipo.
+
+```F#
+[a] = [1,2,3];
+[b] = [4,5,6];
+[c] = [a]+[b];
+escalar = [a]*[c];
+```
 
 ## Funciones integradas
 
@@ -204,7 +216,7 @@ Para usar estas funciones es necesario usar paréntesis `(x)`. Salvo para valor 
 |`atan(x)`|`atg(x)`|Arcotangente|real|
 |`tanh(x)`|`tgh(x)`|Tangente hiperbólico|real|
 |`atanh(x)`|`atgh(x)`|Arcotangente hiperbólico|real|
-|`abs(x)`|`|x|`|Valor absoluto|real|
+|`abs(x)`||Valor absoluto|real|
 |`sqrt(x)`||Raíz cuadrada|real|
 |`ceil(x)`||Función techo|real|
 |`floor(x)`||Función suelo|real|
@@ -221,8 +233,8 @@ Para usar estas funciones es necesario usar paréntesis `(x)`. Salvo para valor 
 
 ### Ejemplos
 
-```shell
-[a] = vProduct([1,2,3],[#pi,rnd(5,10),cos(#pi)]];
+```F#
+[a] = vProduct([1,2,3],[#pi,rnd(5,10),cos(#pi)]]);
 a = |-5|;
 b = distance([1,2,3],[4,5,6]);
 c = distance(10,20);
