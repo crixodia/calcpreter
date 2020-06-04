@@ -132,10 +132,10 @@ c = [c].i = a;
 |.printd|Muestra el valor de una variable en formato decimal|`variable.printd`
 |.info|Muestra el valor de una variable junto con su identificador en un formato adecuado|`variable.info`|
 |.infod|Muestra el valor de una variable jundo con su identificador en formato decimal|`variable.infod`|
-|.list|Muestra todas las variables ingresadas (reales o vectores) en un formato adecuado junto a su identificador|`.list`|
-|.listd|Muestra el valor de todas las variables ingresadas (reales o vectores) en formato decimal junto a su identificador|`.listd`|
-|.const|Muestra una tabla con todas las constantes disponibles|`.const`|
-|.clear|Elimina todas las variables (reales o vectores) de memoria|`.clear`|
+|.list|Muestra todas las variables ingresadas (reales o vectores) en un formato adecuado junto a su identificador|`list`|
+|.listd|Muestra el valor de todas las variables ingresadas (reales o vectores) en formato decimal junto a su identificador|`listd`|
+|.const|Muestra una tabla con todas las constantes disponibles|`const`|
+|.clear|Elimina todas las variables (reales o vectores) de memoria|`clear`|
 
 ### Mostrando valores en pantalla
 
@@ -226,10 +226,10 @@ Para usar estas funciones es necesario usar paréntesis `(x)`. Salvo para valor 
 |`rnd(a, b)`||Número aleatorio entre a y b|real|
 |`mcm(a, b)`||Mínimo común múltiplo entre a y b|real|
 |`mcd(a, b)`||Máximo común divisor entre a y b|real|
-|`distance(a, b)`|`distance([a], [b])`|Distancia entre a y b|real|
+|`dist(a, b)`|`dist([a], [b])`|Distancia entre a y b|real|
 |`nthPrime(x)`||Enésimo número primo|real|
 |`nthFibonacci(x)`||Enésimo número de la sucesión de Fibonacci|real|
-|`vProduct([a], [b])`||Producto vectorial|vector|
+|`Gibbs([a], [b])`||Producto vectorial|vector|
 
 ### Ejemplos
 

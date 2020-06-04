@@ -1,20 +1,20 @@
 %option noyywrap
 %%
-"="                         { return ASIG; }
-"->"                        { return TO; }
+"="                         { return asig; }
 
-".i"                        { return CANONI; }
-".j"                        { return CANONJ; }
-".k"                        { return CANONK; }
+"clear"                     { return clear; }
+"consts"                    { return constantes; }
+"list"                      { return list; }
+"listd"                     { return listd; }
 
-".clear"                    { return CLEAR; }
-".print"                    { return PRINT; }
-".printd"                   { return PRINTD; }
-".info"                     { return INFO; }
-".infod"                    { return INFOD; }
-".list"                     { return LIST; }
-".listd"                    { return LISTD; }
-".const"                    { return CONSTANTES; }
+".print"                    { return print; }
+".printd"                   { return printd; }
+".info"                     { return info; }
+".infod"                    { return infod; }
+
+".i"                        { return canoni; }
+".j"                        { return canonj; }
+".k"                        { return canonk; }
 
 "cos"                       { return COS; }
 "acos"                      { return ACOS; }
@@ -43,23 +43,19 @@
 "rnd"                       { return RND; }
 "mcd"                       { return MCD; }
 "mcm"                       { return MCM; }
-"distance"                  { return DISTANCE; }
-"nthPrime"                  { return NTHPRI; }
-"nthFibonacci"              { return NTHFIB; }
-"vProduct"                  { return VPROD; }
+"dist"                      { return distancia; }
+"nthPri"                    { return nthpri; }
+"nthFib"                    { return nthfib; }
+"Gibbs"                     { return pcruz; }
 
-"k"                         { return KILO; }
-
-"m"                         { return METRO; }
-
-"#pi"|"#PI"                 { return PI; }
-"#e"|"#napier"|"#euler"     { return EULER; }
-"#G"                        { return GRAVITACIONAL; }
-"#k"                        { return COULOMB; }
-"#c"                        { return VLUZ; }
-"#elect"                    { return ELECTRON; }
-"#prot"                     { return PROTON; }
-"#neut"                     { return NEUTRON; }
+"#pi"|"#pi"                 { return pi; }
+"#e"|"#napier"|"#euler"     { return euler; }
+"#G"                        { return gravitacional; }
+"#k"                        { return coulomb; }
+"#c"                        { return vluz; }
+"#elect"                    { return electron; }
+"#prot"                     { return proton; }
+"#neut"                     { return neutron; }
 
 [0-9]+\.?[0-9]*             {
                                 yylval.numero = strtod(yytext, NULL);
@@ -88,6 +84,12 @@
                                     insertarVector(&v, yylval.ptrSimboloVector);
                                 }
                                 return VECTOR;
+                            }
+[a-zA-Z][a-zA-Z0-9]*\:      {
+                                printf("Esto es una recta\n");
+                            }
+\:[a-zA-Z][a-zA-Z0-9]*\:    {
+                                printf("Esto es un plano\n");
                             }
 \/\/.*;                     { ; }
 [ \b\t\n]+                  { ; }

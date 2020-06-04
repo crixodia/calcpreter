@@ -36,20 +36,19 @@ simbolo *buscar(simbolo *t, char nombre[20])
     return (t);
 };
 
-void imprimir(simbolo *t)
+void imprimir(simbolo *t, int type)
 {
     while (t != NULL)
     {
-        printf("%s = %g\n", t->nombre, t->valor);
-        t = t->sig;
-    }
-};
-
-void imprimirD(simbolo *t)
-{
-    while (t != NULL)
-    {
-        printf("%s = %f\n", t->nombre, t->valor);
+        switch (type)
+        {
+        case 0: //g
+            printf("%s = %g\n", t->nombre, t->valor);
+            break;
+        case 1: //f
+            printf("%s = %f\n", t->nombre, t->valor);
+            break;
+        }
         t = t->sig;
     }
 };
