@@ -227,9 +227,9 @@ Para usar estas funciones es necesario usar paréntesis `(x)`. Salvo para valor 
 |`mcm(a, b)`||Mínimo común múltiplo entre a y b|real|
 |`mcd(a, b)`||Máximo común divisor entre a y b|real|
 |`dist(a, b)`|`dist([a], [b])`|Distancia entre a y b|real|
-|`nthPrime(x)`||Enésimo número primo|real|
-|`nthFibonacci(x)`||Enésimo número de la sucesión de Fibonacci|real|
-|`Gibbs([a], [b])`||Producto vectorial|vector|
+|`nthPri(x)`||Enésimo número primo|real|
+|`nthFib(x)`||Enésimo número de la sucesión de Fibonacci|real|
+|`gibbs([a], [b])`||Producto vectorial|vector|
 
 ### Ejemplos
 

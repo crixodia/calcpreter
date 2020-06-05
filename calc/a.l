@@ -46,7 +46,10 @@
 "dist"                      { return distancia; }
 "nthPri"                    { return nthpri; }
 "nthFib"                    { return nthfib; }
-"Gibbs"                     { return pcruz; }
+"gibbs"                     { return pcruz; }
+"unit"                      { return unit; }
+"proy"                      { return proy; }
+"norm"                      { return norm; }
 
 "#pi"|"#pi"                 { return pi; }
 "#e"|"#napier"|"#euler"     { return euler; }

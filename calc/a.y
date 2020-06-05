@@ -51,12 +51,12 @@
 %token ASINH ATANH
 
 %token ABS LN SQRT CEIL FLOOR RND MCD EXP LOG MCM
-%token distancia nthpri nthfib pcruz
+%token distancia nthpri nthfib pcruz unit proy norm
 
 %type <numero> E A
 %type <vector> V AV
-%type <recta> R AR
-%type <plano> P AP
+/*%type <recta> R AR
+%type <plano> P AP*/
 
 %left '+' '-'
 %left '*' '/' '%'
@@ -115,7 +115,7 @@ AV:  VECTOR asig V          {
 ;
 
 // Asignaciones recta
-AR: ID_RECTA asig R         {
+/*AR: ID_RECTA asig R         {
 
                             }
 |ID_RECTA asig AR           {
@@ -130,14 +130,14 @@ AP: ID_PLANO asig P         {
 |ID_PLANO asig AP           {
 
                             }
-;
+;*/
 // Operaciones con escalares
 E:   E '+' E		   	    { $$ = $1 + $3; }
 |E '-' E			        { $$ = $1 - $3; }
 |E '*' E			        { $$ = $1 * $3; }
 |E '/' E			        {
                                 if($3 == 0){
-                                    printf("Division by zero\n");
+                                    printf("Error: división por cero\n");
                                     $$ = 0;
                                 }else{
                                     $$ = $1 / $3;
@@ -186,18 +186,12 @@ E:   E '+' E		   	    { $$ = $1 + $3; }
 |nthpri '(' E ')'           { $$ = nthPrimo((int)$3); }
 |nthfib '(' E ')'           { $$ = nthFibonacci((int)$3); }
 
-// Funciones vectoriales escalares
+// Entrada: vector, Salida: escalar
 |V '*' V                    { $$ = productoInterno($1, $3); }
-|ABS '(' V ')'              { $$ = sqrt(productoInterno($3, $3)); }
-|'|' V '|'                  { $$ = sqrt(productoInterno($2, $2)); }
-|distancia '(' V ',' V ')'   {
-                                double temp[3];
-                                memcpy(temp, $5, 3*sizeof(double));
-                                escalarVector(temp, temp, -1.0);
-                                sumaVector( temp, temp, $3);
-                                $$ = sqrt(productoInterno(temp, temp));
-                            }
-|distancia '(' E ',' E ')'   { $$ = fabs($5 - $3); }
+|ABS '(' V ')'              { $$ = norma($3); }
+|'|' V '|'                  { $$ = norma($2); }
+|distancia '(' V ',' V ')'  { $$ = distanciaVector($3, $5); }
+|distancia '(' E ',' E ')'  { $$ = fabs($5 - $3); }
 
 // Constantes
 |pi                         { $$ = M_PI; }
@@ -218,27 +212,26 @@ V:   '[' E ',' E ',' E ']'  { $$[0] = $2; $$[1] = $4; $$[2] = $6; }
 |'[' E ',' E ']'            { $$[0] = $2; $$[1] = $4; }
 |'[' E ']'                  { $$[0] = $2; }
 |V '+' V                    { sumaVector($$, $1, $3); }
-|V '-' V                    { 
-                                double temp[3];
-                                escalarVector(temp, $3, -1.0);
-                                sumaVector($$, $1, temp); 
-                            }
+|V '-' V                    { restaVector($$, $1, $3); }
 |E '*' V                    { escalarVector($$, $3, $1);}
 |'-' V                      { escalarVector($$, $2, -1.0); }
-|VECTOR                     { memcpy($$, $1->valor, 3*sizeof(double)); }
-|VECT                       { memcpy($$, $1, 3*sizeof(double)); }
 
-// Funciones vectoriales
 |pcruz '(' V ',' V ')'      { productoVectorial($$, $3, $5); }
+|proy '(' V ',' V ')'       { proyeccionVector($$, $3, $5); }
+|norm '(' V ',' V ')'       { normalVector($$, $3, $5); }
+|unit '(' V ')'             { unitarioVector($$, $3); }
+
+|VECTOR                     { memcpy($$, $1->valor, VECTOR_SZ); }
+|VECT                       { memcpy($$, $1, VECTOR_SZ); }
 ;
 
 // Operaciones con rectas
-R:
-;
+//R:
+//;
 
 // Operaciones con planos
-P:
-;
+//P:
+//;
 
 %%
 #include "lex.yy.c"
