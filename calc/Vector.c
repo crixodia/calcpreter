@@ -27,15 +27,16 @@ simboloVector *buscarVector(simboloVector *t, char nombre[20])
 
 void imprimirVector(simboloVector *t, int type)
 {
+    printf("\n   []:\n");
     while (t != NULL)
     {
         switch (type)
         {
         case 0:
-            printf("%s = [%g, %g, %g]\n", t->nombre, t->valor[0], t->valor[1], t->valor[2]);
+            printf("\t%s = [%g, %g, %g]\n", t->nombre, t->valor[0], t->valor[1], t->valor[2]);
             break;
         case 1:
-            printf("%s = [%f, %f, %f]\n", t->nombre, t->valor[0], t->valor[1], t->valor[2]);
+            printf("\t%s = [%f, %f, %f]\n", t->nombre, t->valor[0], t->valor[1], t->valor[2]);
             break;
         }
         t = t->sig;

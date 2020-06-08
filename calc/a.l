@@ -6,6 +6,7 @@
 "consts"                    { return constantes; }
 "list"                      { return list; }
 "listd"                     { return listd; }
+"exit"                      { return salir; }
 
 ".print"                    { return print; }
 ".printd"                   { return printd; }
@@ -95,6 +96,7 @@
                                 printf("Esto es un plano\n");
                             }
 \/\/.*;                     { ; }
-[ \b\t\n]+                  { ; }
+[ \b\t]+                    { ; /* Sube la linea de abajo para modo archivos */}
+[\n]                        { printf("<< "); /* Comentar para archivos */ }
 .                           { return yytext[0]; }
 %%

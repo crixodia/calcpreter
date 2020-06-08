@@ -11,7 +11,7 @@
     simboloRecta * r;
     simboloPlano * p;
 
-    //Prototipos
+    //Prototipos    
     int yylex(void);
     int yyerror();
 %}
@@ -23,10 +23,10 @@
     double vector[3];
     simboloVector * ptrSimboloVector;
 
-    double recta[2][3];
+    double recta[6];
     simboloRecta * ptrSimboloRecta;
 
-    double plano[3][3];
+    double plano[9];
     simboloPlano * ptrSimboloPlano;
 }
 
@@ -43,7 +43,7 @@
 %token <ptrSimboloPlano> ID_PLANO
 
 %token asig print printd info infod list listd canoni canonj canonk 
-%token constantes clear
+%token constantes clear salir
 
 %token pi euler gravitacional coulomb electron proton neutron vluz
 
@@ -65,21 +65,22 @@
 %%
 // Expresiones
 S:S A ';'                   { ; }
-|S ID info ';'              { printf("%s = %g\n",$2->nombre, $2->valor); }
-|S ID infod ';'             { printf("%s = %f\n",$2->nombre, $2->valor); }
-|S E print ';'              { printf("%g\n", $2); }
-|S E printd ';'             { printf("%f\n", $2); }
+|S ID info ';'              { printf(">> %s = %g\n",$2->nombre, $2->valor); }
+|S ID infod ';'             { printf(">> %s = %f\n",$2->nombre, $2->valor); }
+|S E print ';'              { printf(">> %g\n", $2); }
+|S E printd ';'             { printf(">> %f\n", $2); }
 |S AV ';'                   { ; }
-|S VECTOR info ';'          { printf("%s = [%g, %g, %g]\n",$2->nombre, $2->valor[0], $2->valor[1], $2->valor[2]); }
-|S VECTOR infod ';'         { printf("%s = [%f, %f, %f]\n",$2->nombre, $2->valor[0], $2->valor[1], $2->valor[2]); }
-|S V print ';'              { printf("%g, %g, %g\n", $2[0], $2[1], $2[2]); }
-|S V printd ';'             { printf("%f, %f, %f\n", $2[0], $2[1], $2[2]); }
+|S VECTOR info ';'          { printf(">> %s = [%g, %g, %g]\n",$2->nombre, $2->valor[0], $2->valor[1], $2->valor[2]); }
+|S VECTOR infod ';'         { printf(">> %s = [%f, %f, %f]\n",$2->nombre, $2->valor[0], $2->valor[1], $2->valor[2]); }
+|S V print ';'              { printf(">> %g, %g, %g\n", $2[0], $2[1], $2[2]); }
+|S V printd ';'             { printf(">> %f, %f, %f\n", $2[0], $2[1], $2[2]); }
 |S list ';'                 { imprimir(t,0); imprimirVector(v,0); }
 |S listd ';'                { imprimir(t,1); imprimirVector(v,1); }
 |S constantes ';'           { imprimirConstantes(); }
 |S clear ';'                { v = NULL; t = NULL; }
+|S salir ';'                { exit (EXIT_SUCCESS); }
 |S error ';'                { 
-                              printf("Error: Verifica tu entrada o tipo entre las operaciones\n");
+                              printf("E: Verifica entrada o tipo entre las operaciones\n");
                               yyerrok; 
                             }
 |/**/
@@ -137,7 +138,7 @@ E:   E '+' E		   	    { $$ = $1 + $3; }
 |E '*' E			        { $$ = $1 * $3; }
 |E '/' E			        {
                                 if($3 == 0){
-                                    printf("Error: división por cero\n");
+                                    printf("E: División por cero\n");
                                     $$ = 0;
                                 }else{
                                     $$ = $1 / $3;
@@ -240,6 +241,8 @@ V:   '[' E ',' E ',' E ']'  { $$[0] = $2; $$[1] = $4; $$[2] = $6; }
 int main()
 {
     t = crear();
+    //Input feedback
+    printf("Bienvenido a calcpreter\n<< ");
     yyparse();
     return 0;
 }

@@ -11,6 +11,13 @@
 #include <stdio.h>
 #include <string.h>
 
+/*void printInput(int ln){
+    if (ln == 0)
+        printf("\n<< ");
+    else
+        printf("<< ");
+}*/
+
 typedef struct simbolo
 {
     struct simbolo *sig;
@@ -38,15 +45,16 @@ simbolo *buscar(simbolo *t, char nombre[20])
 
 void imprimir(simbolo *t, int type)
 {
+    printf("\n   ##:\n");
     while (t != NULL)
     {
         switch (type)
         {
         case 0: //g
-            printf("%s = %g\n", t->nombre, t->valor);
+            printf("\t%s = %g\n", t->nombre, t->valor);
             break;
         case 1: //f
-            printf("%s = %f\n", t->nombre, t->valor);
+            printf("\t%s = %f\n", t->nombre, t->valor);
             break;
         }
         t = t->sig;
@@ -104,14 +112,14 @@ int factorial(int n)
 //Imprime una tabla con las constantes matemáticas en el sistema internacional
 void imprimirConstantes()
 {
-    printf("Command\t\t\tValue\t\tDescription\n\n");
-    printf("#pi\t#PI\t\t%g\t\tPi number\n", M_PI);
-    printf("#e\t#euler\t#napier\t%g\t\te number\n", M_EULER);
-    printf("#G\t\t\t%g\tGravitational constant\n", M_G);
-    printf("#k\t\t\t%g\tCoulomb constant\n", M_K);
-    printf("#c\t\t\t%g\t\tLight speed constant\n", M_VLUZ);
-    printf("#elect\t\t\t%g\tElectron charge\n", M_ELECTRON);
-    printf("#prot\t\t\t%g\tProton charge\n", -M_ELECTRON);
-    printf("#neut\t\t\t%g\t\tNeutron charge\n", 0.0);
-    printf("*Using International System of Units (SI)\n");
+    printf("\n    #:\n\tCommand\t\t\tValue\t\tDescription\n\n");
+    printf("\t#pi\t#PI\t\t%g\t\tPi number\n", M_PI);
+    printf("\t#e\t#euler\t#napier\t%g\t\te number\n", M_EULER);
+    printf("\t#G\t\t\t%g\tGravitational constant\n", M_G);
+    printf("\t#k\t\t\t%g\tCoulomb constant\n", M_K);
+    printf("\t#c\t\t\t%g\t\tLight speed constant\n", M_VLUZ);
+    printf("\t#elect\t\t\t%g\tElectron charge\n", M_ELECTRON);
+    printf("\t#prot\t\t\t%g\tProton charge\n", -M_ELECTRON);
+    printf("\t#neut\t\t\t%g\t\tNeutron charge\n", 0.0);
+    printf("\t*Using International System of Units (SI)\n");
 }
