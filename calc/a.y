@@ -1,24 +1,25 @@
 %{
     //Tipos de dato
-    #include "TabSim.c"
+    #include "Clc.c"
+    #include "Real.c"
     #include "Vector.c"
-    #include "Recta.c"
-    #include "Plano.c"
+    #include "Line.c"
+    #include "Plane.c"
 
     //Tablas de símbolo
-    simbolo * t;
+    real * t;
     simboloVector * v;
     simboloRecta * r;
     simboloPlano * p;
 
-    //Prototipos    
+    //Prototipos
     int yylex(void);
     int yyerror();
 %}
 
 %union {
     double numero;
-    simbolo * ptrSimbolo;
+    real * ptrSimbolo;
 
     double vector[3];
     simboloVector * ptrSimboloVector;
@@ -43,7 +44,9 @@
 %token <ptrSimboloPlano> ID_PLANO
 
 %token asig print printd info infod list listd canoni canonj canonk 
-%token constantes clear salir
+%token constantes clear salir clscreen
+
+%token todo
 
 %token pi euler gravitacional coulomb electron proton neutron vluz
 
@@ -77,7 +80,8 @@ S:S A ';'                   { ; }
 |S list ';'                 { imprimir(t,0); imprimirVector(v,0); }
 |S listd ';'                { imprimir(t,1); imprimirVector(v,1); }
 |S constantes ';'           { imprimirConstantes(); }
-|S clear ';'                { v = NULL; t = NULL; }
+|S clear '(' todo ')' ';'   { v = NULL; t = NULL; } //CONFIRMACIÓN?????
+|S clscreen ';'             { ClearScreen(); }
 |S salir ';'                { exit (EXIT_SUCCESS); }
 |S error ';'                { 
                               printf("E: Verifica entrada o tipo entre las operaciones\n");
@@ -242,7 +246,7 @@ int main()
 {
     t = crear();
     //Input feedback
-    printf("Bienvenido a calcpreter\n<< ");
+    printf("Calcpreter 0.0.1\n<< ");
     yyparse();
     return 0;
 }

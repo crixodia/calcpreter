@@ -2,7 +2,10 @@
 %%
 "="                         { return asig; }
 
-"clear"                     { return clear; }
+"all"                       { return todo; }
+
+"delete"                    { return clear; }
+"cls"|"clear"               { return clscreen; }
 "consts"                    { return constantes; }
 "list"                      { return list; }
 "listd"                     { return listd; }
