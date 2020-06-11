@@ -1,15 +1,15 @@
 %option noyywrap
 %%
-"="                         { return asig; }
+"="                         { return asg; }
 
-"all"                       { return todo; }
+"all"                       { return all; }
 
-"delete"                    { return clear; }
-"cls"|"clear"               { return clscreen; }
-"consts"                    { return constantes; }
+"delete"                    { return del; }
+"cls"|"clear"               { return clc; }
+"consts"                    { return consts; }
 "list"                      { return list; }
 "listd"                     { return listd; }
-"exit"                      { return salir; }
+"exit"                      { return leave; }
 
 ".print"                    { return print; }
 ".printd"                   { return printd; }
@@ -45,39 +45,39 @@
 "log"                       { return LOG; }
 
 "rnd"                       { return RND; }
-"mcd"                       { return MCD; }
-"mcm"                       { return MCM; }
-"dist"                      { return distancia; }
+"mcd"                       { return GCD; }
+"mcm"                       { return LCM; }
+"dist"                      { return distance; }
 "nthPri"                    { return nthpri; }
 "nthFib"                    { return nthfib; }
-"gibbs"                     { return pcruz; }
+"gibbs"                     { return pcrux; }
 "unit"                      { return unit; }
 "proy"                      { return proy; }
 "norm"                      { return norm; }
 
 "#pi"|"#pi"                 { return pi; }
 "#e"|"#napier"|"#euler"     { return euler; }
-"#G"                        { return gravitacional; }
+"#G"                        { return gravi; }
 "#k"                        { return coulomb; }
-"#c"                        { return vluz; }
+"#c"                        { return vlight; }
 "#elect"                    { return electron; }
 "#prot"                     { return proton; }
 "#neut"                     { return neutron; }
 
 [0-9]+\.?[0-9]*             {
-                                yylval.numero = strtod(yytext, NULL);
-                                return NUMERO;
+                                yylval.real = strtod(yytext, NULL);
+                                return REAL;
                             }
 
 [a-zA-Z][a-zA-Z0-9]*        {
-                                yylval.ptrSimbolo = buscar(t, yytext);
-                                if (yylval.ptrSimbolo == NULL) {
-                                    yylval.ptrSimbolo = (simbolo *) malloc(sizeof(simbolo));
-                                    strcpy(yylval.ptrSimbolo->nombre, yytext);
-                                    yylval.ptrSimbolo->valor = 0;
-                                    insertar(&t, yylval.ptrSimbolo);
+                                yylval.pReal = search(t, yytext);
+                                if (yylval.pReal == NULL) {
+                                    yylval.pReal = (real *) malloc(sizeof(real));
+                                    strcpy(yylval.pReal->name, yytext);
+                                    yylval.pReal->value = 0;
+                                    insertar(&t, yylval.pReal);
                                 }
-                                return ID;
+                                return id;
                             }
 
 \[[a-zA-Z][a-zA-Z0-9]*\]    {
@@ -90,13 +90,13 @@
                                     yylval.ptrSimboloVector->valor[2] = 0;
                                     insertarVector(&v, yylval.ptrSimboloVector);
                                 }
-                                return VECTOR;
+                                return id_vector;
                             }
 [a-zA-Z][a-zA-Z0-9]*\:      {
-                                printf("Esto es una recta\n");
+                                printf("Line\n");
                             }
 \:[a-zA-Z][a-zA-Z0-9]*\:    {
-                                printf("Esto es un plano\n");
+                                printf("Plane\n");
                             }
 \/\/.*;                     { ; }
 [ \b\t]+                    { ; /* Sube la linea de abajo para modo archivos */}

@@ -1,3 +1,8 @@
 Command,Variant 1,Variant 2,Value,Description
-#pi,#PI,,3.1416,Pi number
-#e,#napier,#euler,2.1354654,e number
+#pi,#PI,,3.141592654,Pi number
+#e,#napier,#euler,2.718281828,e number
+#G,,,,Gravitational constant
+#k,,,,Coulomb's constant
+#c,,,,Light speed constant
+#elect,,,,Electron charge
+#prot,,,,Proton charge

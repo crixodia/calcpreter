@@ -8,9 +8,9 @@
 
     //Tablas de símbolo
     real * t;
-    simboloVector * v;
-    simboloRecta * r;
-    simboloPlano * p;
+    vector * v;
+    line * r;
+    plane * p;
 
     //Prototipos
     int yylex(void);
@@ -18,46 +18,46 @@
 %}
 
 %union {
-    double numero;
-    real * ptrSimbolo;
+    double real_s;
+    real * pReal;
 
-    double vector[3];
-    simboloVector * ptrSimboloVector;
+    double vector_s[3];
+    vector * pVector;
 
-    double recta[6];
-    simboloRecta * ptrSimboloRecta;
+    double line_s[6];
+    line * pLine;
 
-    double plano[9];
-    simboloPlano * ptrSimboloPlano;
+    double plane_s[9];
+    plane * pPlane;
 }
 
-%token <numero> NUMERO
-%token <ptrSimbolo> ID
+%token <real_s> REAL
+%token <pReal> id
 
-%token <vector> VECT
-%token <ptrSimboloVector> VECTOR
+%token <vector_s> VECTOR
+%token <pVector> id_vector
 
-%token <recta> RECTA
-%token <ptrSimboloRecta> ID_RECTA
+%token <line_s> LINE
+%token <pLine> ID_RECTA
 
-%token <plano> PLANO
-%token <ptrSimboloPlano> ID_PLANO
+%token <plane_s> PLANE
+%token <pPlane> ID_PLANO
 
-%token asig print printd info infod list listd canoni canonj canonk 
-%token constantes clear salir clscreen
+%token asg print printd info infod list listd canoni canonj canonk 
+%token consts del leave clc
 
-%token todo
+%token all
 
-%token pi euler gravitacional coulomb electron proton neutron vluz
+%token pi euler gravi coulomb electron proton neutron vlight
 
 %token COS SIN TAN ACOS ASIN ATAN COSH SINH TANH ACOSH 
 %token ASINH ATANH
 
-%token ABS LN SQRT CEIL FLOOR RND MCD EXP LOG MCM
-%token distancia nthpri nthfib pcruz unit proy norm
+%token ABS LN SQRT CEIL FLOOR RND GCD EXP LOG LCM
+%token distance nthpri nthfib pcrux unit proy norm
 
-%type <numero> E A
-%type <vector> V AV
+%type <real_s> E A
+%type <vector_s> V AV
 /*%type <recta> R AR
 %type <plano> P AP*/
 
@@ -68,55 +68,55 @@
 %%
 // Expresiones
 S:S A ';'                   { ; }
-|S ID info ';'              { printf(">> %s = %g\n",$2->nombre, $2->valor); }
-|S ID infod ';'             { printf(">> %s = %f\n",$2->nombre, $2->valor); }
+|S id info ';'              { printf(">> %s = %g\n",$2->nombre, $2->valor); }
+|S id infod ';'             { printf(">> %s = %f\n",$2->nombre, $2->valor); }
 |S E print ';'              { printf(">> %g\n", $2); }
 |S E printd ';'             { printf(">> %f\n", $2); }
 |S AV ';'                   { ; }
-|S VECTOR info ';'          { printf(">> %s = [%g, %g, %g]\n",$2->nombre, $2->valor[0], $2->valor[1], $2->valor[2]); }
-|S VECTOR infod ';'         { printf(">> %s = [%f, %f, %f]\n",$2->nombre, $2->valor[0], $2->valor[1], $2->valor[2]); }
+|S id_vector info ';'       { printf(">> %s = [%g, %g, %g]\n",$2->nombre, $2->valor[0], $2->valor[1], $2->valor[2]); }
+|S id_vector infod ';'      { printf(">> %s = [%f, %f, %f]\n",$2->nombre, $2->valor[0], $2->valor[1], $2->valor[2]); }
 |S V print ';'              { printf(">> %g, %g, %g\n", $2[0], $2[1], $2[2]); }
 |S V printd ';'             { printf(">> %f, %f, %f\n", $2[0], $2[1], $2[2]); }
-|S list ';'                 { imprimir(t,0); imprimirVector(v,0); }
-|S listd ';'                { imprimir(t,1); imprimirVector(v,1); }
-|S constantes ';'           { imprimirConstantes(); }
-|S clear '(' todo ')' ';'   { v = NULL; t = NULL; } //CONFIRMACIÓN?????
-|S clscreen ';'             { ClearScreen(); }
-|S salir ';'                { exit (EXIT_SUCCESS); }
+|S list ';'                 { printReal(t,0); printVector(v,0); }
+|S listd ';'                { printReal(t,1); printVector(v,1); }
+|S consts ';'               { printConsts(); }
+|S del '(' all ')' ';'      { v = NULL; t = NULL; } //CONFIRMACIÓN?????
+|S clc ';'                  { ClearScreen(); }
+|S leave ';'                { exit (EXIT_SUCCESS); }
 |S error ';'                { 
-                              printf("E: Verifica entrada o tipo entre las operaciones\n");
+                              printf("E: Something is missing (';')\n");
                               yyerrok; 
                             }
 |/**/
 ;
 
 // Asignaciones
-A:   ID asig E              {
+A:   id asg E               {
                                 $$ = $3;
                                 $1->valor = $3;
                             }
-|ID asig A                  {
+|id asg A                   {
                                 $$ = $3;
                                 $1->valor = $3;
                             }
 ;
 
 // Asignaciones a vectores
-AV:  VECTOR asig V          {
+AV:  id_vector asg V        {
                                 memcpy($$, $3, 3*sizeof(double));
                                 $1->valor[0] = $3[0];
                                 $1->valor[1] = $3[1];
                                 $1->valor[2] = $3[2];
                             }
-|VECTOR asig AV             {
+|id_vector asg AV           {
                                 memcpy($$, $3, 3*sizeof(double));
                                 $1->valor[0] = $3[0];
                                 $1->valor[1] = $3[1];
                                 $1->valor[2] = $3[2];
                             }
-|VECTOR canoni asig E       { $1->valor[0] = $4; }
-|VECTOR canonj asig E       { $1->valor[1] = $4; }
-|VECTOR canonk asig E       { $1->valor[2] = $4; }
+|id_vector canoni asg E        { $1->valor[0] = $4; }
+|id_vector canonj asg E        { $1->valor[1] = $4; }
+|id_vector canonk asg E        { $1->valor[2] = $4; }
 ;
 
 // Asignaciones recta
@@ -142,7 +142,7 @@ E:   E '+' E		   	    { $$ = $1 + $3; }
 |E '*' E			        { $$ = $1 * $3; }
 |E '/' E			        {
                                 if($3 == 0){
-                                    printf("E: División por cero\n");
+                                    printf("E: Division by zero\n");
                                     $$ = 0;
                                 }else{
                                     $$ = $1 / $3;
@@ -155,9 +155,9 @@ E:   E '+' E		   	    { $$ = $1 + $3; }
 |E '!'			            { $$ = factorial($1); }
 
 // Asignación a vectores
-|VECTOR canoni              { $$ = $1->valor[0]; }
-|VECTOR canonj              { $$ = $1->valor[1]; }
-|VECTOR canonk              { $$ = $1->valor[2]; }
+|id_vector canoni           { $$ = $1->valor[0]; }
+|id_vector canonj           { $$ = $1->valor[1]; }
+|id_vector canonk           { $$ = $1->valor[2]; }
 
 // Funciones trigonométricas
 |COS '(' E ')'    	        { $$ = cos($3); }
@@ -186,8 +186,8 @@ E:   E '+' E		   	    { $$ = $1 + $3; }
                                 srand(time(NULL));
                                 $$=rand()%(int)(($5-$3+1)+$3);
                             }
-|MCD '(' E ',' E ')'        { $$ = mcd($3,$5); }
-|MCM '(' E ',' E ')'        { $$ = mcm($3,$5); }
+|GCD '(' E ',' E ')'        { $$ = gcd($3,$5); }
+|LCM '(' E ',' E ')'        { $$ = lcm($3,$5); }
 |nthpri '(' E ')'           { $$ = nthPrimo((int)$3); }
 |nthfib '(' E ')'           { $$ = nthFibonacci((int)$3); }
 
@@ -195,21 +195,21 @@ E:   E '+' E		   	    { $$ = $1 + $3; }
 |V '*' V                    { $$ = productoInterno($1, $3); }
 |ABS '(' V ')'              { $$ = norma($3); }
 |'|' V '|'                  { $$ = norma($2); }
-|distancia '(' V ',' V ')'  { $$ = distanciaVector($3, $5); }
-|distancia '(' E ',' E ')'  { $$ = fabs($5 - $3); }
+|distance '(' V ',' V ')'   { $$ = distanciaVector($3, $5); }
+|distance '(' E ',' E ')'   { $$ = fabs($5 - $3); }
 
 // Constantes
 |pi                         { $$ = M_PI; }
-|gravitacional              { $$ = M_G; }
+|gravi                      { $$ = M_G; }
 |coulomb                    { $$ = M_K; }
-|vluz                       { $$ = M_VLUZ; }
+|vlight                     { $$ = M_VLUZ; }
 |electron                   { $$ = M_ELECTRON; }
 |proton                     { $$ = -M_ELECTRON; }
 |neutron                    { $$ = 0; }
 |euler                      { $$ = M_EULER; }
 
-|ID                         { $$ = $1->valor; }
-|NUMERO                     { $$ = $1; }
+|id                         { $$ = $1->valor; }
+|REAL                       { $$ = $1; }
 ;
 
 // Operaciones con vectores
@@ -221,13 +221,13 @@ V:   '[' E ',' E ',' E ']'  { $$[0] = $2; $$[1] = $4; $$[2] = $6; }
 |E '*' V                    { escalarVector($$, $3, $1);}
 |'-' V                      { escalarVector($$, $2, -1.0); }
 
-|pcruz '(' V ',' V ')'      { productoVectorial($$, $3, $5); }
+|pcrux '(' V ',' V ')'      { productoVectorial($$, $3, $5); }
 |proy '(' V ',' V ')'       { proyeccionVector($$, $3, $5); }
 |norm '(' V ',' V ')'       { normalVector($$, $3, $5); }
 |unit '(' V ')'             { unitarioVector($$, $3); }
 
-|VECTOR                     { memcpy($$, $1->valor, VECTOR_SZ); }
-|VECT                       { memcpy($$, $1, VECTOR_SZ); }
+|id_vector                  { memcpy($$, $1->valor, VECTOR_SZ); }
+|VECTOR                     { memcpy($$, $1, VECTOR_SZ); }
 ;
 
 // Operaciones con rectas
