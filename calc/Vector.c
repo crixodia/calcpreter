@@ -1,31 +1,31 @@
 const double VECTOR_SZ = 3 * sizeof(double);
 
-typedef struct simboloVector
+typedef struct vector
 {
-    struct simboloVector *sig;
-    char nombre[20];
-    double valor[3];
-} simboloVector;
+    struct vector *sig;
+    char name[20];
+    double value[3];
+} vector;
 
-simboloVector *crearVector()
+vector *createVector()
 {
     return NULL;
 };
 
-void insertarVector(simboloVector **pT, simboloVector *s)
+void insertVector(vector **pT, vector *s)
 {
     s->sig = (*pT);
     (*pT) = s;
 };
 
-simboloVector *buscarVector(simboloVector *t, char nombre[20])
+vector *searchVector(vector *t, char _name[20])
 {
-    while ((t != NULL) && (strcmp(nombre, t->nombre)))
+    while ((t != NULL) && (strcmp(_name, t->name)))
         t = t->sig;
     return (t);
 };
 
-void imprimirVector(simboloVector *t, int type)
+void printVector(vector *t, int type)
 {
     printf("\n   []:\n");
     while (t != NULL)
@@ -33,10 +33,10 @@ void imprimirVector(simboloVector *t, int type)
         switch (type)
         {
         case 0:
-            printf("\t%s = [%g, %g, %g]\n", t->nombre, t->valor[0], t->valor[1], t->valor[2]);
+            printf("\t%s = [%g, %g, %g]\n", t->name, t->value[0], t->value[1], t->value[2]);
             break;
         case 1:
-            printf("\t%s = [%f, %f, %f]\n", t->nombre, t->valor[0], t->valor[1], t->valor[2]);
+            printf("\t%s = [%f, %f, %f]\n", t->name, t->value[0], t->value[1], t->value[2]);
             break;
         }
         t = t->sig;
@@ -54,7 +54,7 @@ void escalarVector(double *target, double *a, double esc)
 }
 
 //Suma de vectores
-void sumaVector(double *target, double *a, double *b)
+void addVector(double *target, double *a, double *b)
 {
     int i;
     for (i = 0; i < 3; i++)
@@ -64,14 +64,14 @@ void sumaVector(double *target, double *a, double *b)
 }
 
 //Resta vector
-void restaVector(double *target, double *a, double *b)
+void minusVector(double *target, double *a, double *b)
 {    
     escalarVector(target, b, -1.0);
-    sumaVector(target, a, target);
+    addVector(target, a, target);
 }
 
 //Producto punto entre vectores
-double productoInterno(double *a, double *b)
+double dotProduct(double *a, double *b)
 {
     double r = 0;
     int i;
@@ -83,13 +83,13 @@ double productoInterno(double *a, double *b)
 }
 
 //Norma de un vector
-double norma(double *a)
+double magnitude(double *a)
 {
     return sqrt(productoInterno(a, a));
 }
 
 //Producto cruz o vectorial
-void productoVectorial(double *target, double *a, double *b)
+void crossProduct(double *target, double *a, double *b)
 {
     target[0] = a[1] * b[2] - a[2] * b[1];
     target[1] = a[2] * b[0] - a[0] * b[2];
@@ -100,14 +100,14 @@ void productoVectorial(double *target, double *a, double *b)
 double distanciaVector(double *a, double *b)
 {
     double temp[3];
-    restaVector(temp, a, b);
-    return norma(temp);
+    minusVector(temp, a, b);
+    return magnitude(temp);
 }
 
 //Proyección de vectores
-double proyeccionVector(double *target, double *a, double *b)
+double projectionVector(double *target, double *a, double *b)
 {
-    double esc = productoInterno(a, b) / productoInterno(a, a);
+    double esc = dotProduct(a, b) / dotProduct(a, a);
     escalarVector(target, a, esc);
 }
 
@@ -115,11 +115,11 @@ double proyeccionVector(double *target, double *a, double *b)
 double normalVector(double *target, double *a, double *b)
 {
     proyeccionVector(target, a, b);
-    restaVector(target, b, target);
+    minusVector(target, b, target);
 }
 
 //Vector unitario
-double unitarioVector(double *target, double *a)
+double unitVector(double *target, double *a)
 {
     escalarVector(target, a, 1 / norma(a));
 }

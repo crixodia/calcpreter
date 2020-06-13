@@ -81,14 +81,14 @@
                             }
 
 \[[a-zA-Z][a-zA-Z0-9]*\]    {
-                            	yylval.ptrSimboloVector = buscarVector(v, yytext);
-                                if (yylval.ptrSimboloVector == NULL) {
-                                    yylval.ptrSimboloVector = (simboloVector *) malloc(sizeof(simboloVector));
-                                    strcpy(yylval.ptrSimboloVector->nombre, yytext);
-                                    yylval.ptrSimboloVector->valor[0] = 0;
-                                    yylval.ptrSimboloVector->valor[1] = 0;
-                                    yylval.ptrSimboloVector->valor[2] = 0;
-                                    insertarVector(&v, yylval.ptrSimboloVector);
+                            	yylval.pVector = searchVector(v, yytext);
+                                if (yylval.pVector == NULL) {
+                                    yylval.pVector = (vector *) malloc(sizeof(vector));
+                                    strcpy(yylval.pVector->name, yytext);
+                                    yylval.pVector->value[0] = 0;
+                                    yylval.pVector->value[1] = 0;
+                                    yylval.pVector->value[2] = 0;
+                                    insertVector(&v, yylval.pVector);
                                 }
                                 return id_vector;
                             }

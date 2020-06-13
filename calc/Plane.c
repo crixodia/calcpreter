@@ -1,13 +1,13 @@
-typedef struct simboloPlano
+typedef struct plane
 {
-    struct simboloPlano *sig;
+    struct plane *sig;
     char nombre[20];
-    double punto[3];
-    double direccion[3];
-    double direccion2[3];
-} simboloPlano;
+    double *punto;
+    double *direccion;
+    double *direccion2;
+} plane;
 
-simboloPlano *crearPlano()
+/*simboloPlano *crearPlano()
 {
     return NULL;
 };
@@ -32,4 +32,4 @@ void imprimirPlano(simboloPlano *t)
         //printf("%s = [%g, %g, %g]\n", t->nombre, t->punto[0], t->punto[1], t->punto[2]);
         t = t->sig;
     }
-};
+};*/

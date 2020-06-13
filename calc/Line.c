@@ -1,30 +1,30 @@
-typedef struct simboloRecta
+typedef struct line
 {
-    struct simboloRecta *sig;
-    char nombre[20];
+    struct line *sig;
+    char name[20];
     double punto[3];
     double direccion[3];
-} simboloRecta;
+} line;
 
-simboloRecta *crearRecta()
+line *createLine()
 {
     return NULL;
 };
 
-void insertarRecta(simboloRecta **pT, simboloRecta *s)
+void insertLine(line **pT, line *s)
 {
     s->sig = (*pT);
     (*pT) = s;
 };
 
-simboloRecta *buscarRecta(simboloRecta *t, char nombre[20])
+line *searchLine(line *t, char _name[20])
 {
-    while ((t != NULL) && (strcmp(nombre, t->nombre)))
+    while ((t != NULL) && (strcmp(_name, t->name)))
         t = t->sig;
     return (t);
 };
 
-void imprimirRecta(simboloRecta *t)
+void printLine(line *t)
 {
     while (t != NULL)
     {
