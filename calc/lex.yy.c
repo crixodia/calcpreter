@@ -854,27 +854,27 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 3 "a.l"
-{ return asig; }
+{ return asg; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 5 "a.l"
-{ return todo; }
+{ return all; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 7 "a.l"
-{ return clear; }
+{ return del; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 8 "a.l"
-{ return clscreen; }
+{ return clc; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 9 "a.l"
-{ return constantes; }
+{ return consts; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
@@ -889,7 +889,7 @@ YY_RULE_SETUP
 case 8:
 YY_RULE_SETUP
 #line 12 "a.l"
-{ return salir; }
+{ return leave; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
@@ -1029,17 +1029,17 @@ YY_RULE_SETUP
 case 36:
 YY_RULE_SETUP
 #line 48 "a.l"
-{ return MCD; }
+{ return GCD; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 49 "a.l"
-{ return MCM; }
+{ return LCM; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 50 "a.l"
-{ return distancia; }
+{ return distance; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
@@ -1054,7 +1054,7 @@ YY_RULE_SETUP
 case 41:
 YY_RULE_SETUP
 #line 53 "a.l"
-{ return pcruz; }
+{ return pcrux; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
@@ -1084,7 +1084,7 @@ YY_RULE_SETUP
 case 47:
 YY_RULE_SETUP
 #line 60 "a.l"
-{ return gravitacional; }
+{ return gravi; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
@@ -1094,7 +1094,7 @@ YY_RULE_SETUP
 case 49:
 YY_RULE_SETUP
 #line 62 "a.l"
-{ return vluz; }
+{ return vlight; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
@@ -1115,81 +1115,80 @@ case 53:
 YY_RULE_SETUP
 #line 67 "a.l"
 {
-                                yylval.numero = strtod(yytext, NULL);
-                                return NUMERO;
+                                yylval.real_s = strtod(yytext, NULL);
+                                return REAL;
                             }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
 #line 72 "a.l"
 {
-                                yylval.ptrSimbolo = buscar(t, yytext);
-                                if (yylval.ptrSimbolo == NULL) {
-                                    yylval.ptrSimbolo = (simbolo *) malloc(sizeof(simbolo));
-                                    strcpy(yylval.ptrSimbolo->nombre, yytext);
-                                    yylval.ptrSimbolo->valor = 0;
-                                    insertar(&t, yylval.ptrSimbolo);
+                                yylval.pReal = search(t, yytext);
+                                if (yylval.pReal == NULL) {
+                                    yylval.pReal = (real *) malloc(sizeof(real));
+                                    strcpy(yylval.pReal->name, yytext);
+                                    yylval.pReal->value = 0;
+                                    insert(&t, yylval.pReal);
                                 }
-                                return ID;
+                                return id;
                             }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
 #line 83 "a.l"
 {
-                            	yylval.ptrSimboloVector = buscarVector(v, yytext);
-                                if (yylval.ptrSimboloVector == NULL) {
-                                    yylval.ptrSimboloVector = (simboloVector *) malloc(sizeof(simboloVector));
-                                    strcpy(yylval.ptrSimboloVector->nombre, yytext);
-                                    yylval.ptrSimboloVector->valor[0] = 0;
-                                    yylval.ptrSimboloVector->valor[1] = 0;
-                                    yylval.ptrSimboloVector->valor[2] = 0;
-                                    insertarVector(&v, yylval.ptrSimboloVector);
+                                double a[3] = {0,0,0};
+                            	yylval.pVector = searchVector(v, yytext);
+                                if (yylval.pVector == NULL) {
+                                    yylval.pVector = (vector *) malloc(sizeof(vector));
+                                    strcpy(yylval.pVector->name, yytext);
+                                    memcpy(yylval.pVector->value, a, 3*sizeof(double));
+                                    insertVector(&v, yylval.pVector);
                                 }
-                                return VECTOR;
+                                return id_vector;
                             }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 95 "a.l"
+#line 94 "a.l"
 {
-                                printf("Esto es una recta\n");
+                                printf("Line\n");
                             }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 98 "a.l"
+#line 97 "a.l"
 {
-                                printf("Esto es un plano\n");
+                                printf("Plane\n");
                             }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 101 "a.l"
+#line 100 "a.l"
 { ; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 102 "a.l"
+#line 101 "a.l"
 { ; /* Sube la linea de abajo para modo archivos */}
 	YY_BREAK
 case 60:
 /* rule 60 can match eol */
 YY_RULE_SETUP
-#line 103 "a.l"
+#line 102 "a.l"
 { printf("<< "); /* Comentar para archivos */ }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 104 "a.l"
+#line 103 "a.l"
 { return yytext[0]; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 105 "a.l"
+#line 104 "a.l"
 ECHO;
 	YY_BREAK
-#line 1193 "lex.yy.c"
+#line 1192 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2194,5 +2193,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 105 "a.l"
+#line 104 "a.l"
 

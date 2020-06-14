@@ -76,10 +76,10 @@
     #include "Plane.c"
 
     //Tablas de símbolo
-    simbolo * t;
-    simboloVector * v;
-    simboloRecta * r;
-    simboloPlano * p;
+    real * t;
+    vector * v;
+    line * r;
+    plane * p;
 
     //Prototipos
     int yylex(void);
@@ -130,15 +130,15 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    NUMERO = 258,
-    ID = 259,
-    VECT = 260,
-    VECTOR = 261,
-    RECTA = 262,
+    REAL = 258,
+    id = 259,
+    VECTOR = 260,
+    id_vector = 261,
+    LINE = 262,
     ID_RECTA = 263,
-    PLANO = 264,
+    PLANE = 264,
     ID_PLANO = 265,
-    asig = 266,
+    asg = 266,
     print = 267,
     printd = 268,
     info = 269,
@@ -148,19 +148,19 @@ extern int yydebug;
     canoni = 273,
     canonj = 274,
     canonk = 275,
-    constantes = 276,
-    clear = 277,
-    salir = 278,
-    clscreen = 279,
-    todo = 280,
+    consts = 276,
+    del = 277,
+    leave = 278,
+    clc = 279,
+    all = 280,
     pi = 281,
     euler = 282,
-    gravitacional = 283,
+    gravi = 283,
     coulomb = 284,
     electron = 285,
     proton = 286,
     neutron = 287,
-    vluz = 288,
+    vlight = 288,
     COS = 289,
     SIN = 290,
     TAN = 291,
@@ -179,29 +179,29 @@ extern int yydebug;
     CEIL = 304,
     FLOOR = 305,
     RND = 306,
-    MCD = 307,
+    GCD = 307,
     EXP = 308,
     LOG = 309,
-    MCM = 310,
-    distancia = 311,
+    LCM = 310,
+    distance = 311,
     nthpri = 312,
     nthfib = 313,
-    pcruz = 314,
+    pcrux = 314,
     unit = 315,
     proy = 316,
     norm = 317
   };
 #endif
 /* Tokens.  */
-#define NUMERO 258
-#define ID 259
-#define VECT 260
-#define VECTOR 261
-#define RECTA 262
+#define REAL 258
+#define id 259
+#define VECTOR 260
+#define id_vector 261
+#define LINE 262
 #define ID_RECTA 263
-#define PLANO 264
+#define PLANE 264
 #define ID_PLANO 265
-#define asig 266
+#define asg 266
 #define print 267
 #define printd 268
 #define info 269
@@ -211,19 +211,19 @@ extern int yydebug;
 #define canoni 273
 #define canonj 274
 #define canonk 275
-#define constantes 276
-#define clear 277
-#define salir 278
-#define clscreen 279
-#define todo 280
+#define consts 276
+#define del 277
+#define leave 278
+#define clc 279
+#define all 280
 #define pi 281
 #define euler 282
-#define gravitacional 283
+#define gravi 283
 #define coulomb 284
 #define electron 285
 #define proton 286
 #define neutron 287
-#define vluz 288
+#define vlight 288
 #define COS 289
 #define SIN 290
 #define TAN 291
@@ -242,14 +242,14 @@ extern int yydebug;
 #define CEIL 304
 #define FLOOR 305
 #define RND 306
-#define MCD 307
+#define GCD 307
 #define EXP 308
 #define LOG 309
-#define MCM 310
-#define distancia 311
+#define LCM 310
+#define distance 311
 #define nthpri 312
 #define nthfib 313
-#define pcruz 314
+#define pcrux 314
 #define unit 315
 #define proy 316
 #define norm 317
@@ -260,17 +260,17 @@ union YYSTYPE
 {
 #line 20 "a.y"
 
-    double numero;
-    simbolo * ptrSimbolo;
+    double real_s;
+    real * pReal;
 
-    double vector[3];
-    simboloVector * ptrSimboloVector;
+    double vector_s[3];
+    vector * pVector;
 
-    double recta[6];
-    simboloRecta * ptrSimboloRecta;
+    double line_s[6];
+    line * pLine;
 
-    double plano[9];
-    simboloPlano * ptrSimboloPlano;
+    double plane_s[9];
+    plane * pPlane;
 
 #line 276 "y.tab.c"
 
@@ -671,17 +671,16 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "NUMERO", "ID", "VECT", "VECTOR",
-  "RECTA", "ID_RECTA", "PLANO", "ID_PLANO", "asig", "print", "printd",
-  "info", "infod", "list", "listd", "canoni", "canonj", "canonk",
-  "constantes", "clear", "salir", "clscreen", "todo", "pi", "euler",
-  "gravitacional", "coulomb", "electron", "proton", "neutron", "vluz",
-  "COS", "SIN", "TAN", "ACOS", "ASIN", "ATAN", "COSH", "SINH", "TANH",
-  "ACOSH", "ASINH", "ATANH", "ABS", "LN", "SQRT", "CEIL", "FLOOR", "RND",
-  "MCD", "EXP", "LOG", "MCM", "distancia", "nthpri", "nthfib", "pcruz",
-  "unit", "proy", "norm", "'+'", "'-'", "'*'", "'/'", "'%'", "'^'", "'!'",
-  "';'", "'('", "')'", "'|'", "','", "'['", "']'", "$accept", "S", "A",
-  "AV", "E", "V", YY_NULLPTR
+  "$end", "error", "$undefined", "REAL", "id", "VECTOR", "id_vector",
+  "LINE", "ID_RECTA", "PLANE", "ID_PLANO", "asg", "print", "printd",
+  "info", "infod", "list", "listd", "canoni", "canonj", "canonk", "consts",
+  "del", "leave", "clc", "all", "pi", "euler", "gravi", "coulomb",
+  "electron", "proton", "neutron", "vlight", "COS", "SIN", "TAN", "ACOS",
+  "ASIN", "ATAN", "COSH", "SINH", "TANH", "ACOSH", "ASINH", "ATANH", "ABS",
+  "LN", "SQRT", "CEIL", "FLOOR", "RND", "GCD", "EXP", "LOG", "LCM",
+  "distance", "nthpri", "nthfib", "pcrux", "unit", "proy", "norm", "'+'",
+  "'-'", "'*'", "'/'", "'%'", "'^'", "'!'", "';'", "'('", "')'", "'|'",
+  "','", "'['", "']'", "$accept", "S", "A", "AV", "E", "V", YY_NULLPTR
 };
 #endif
 
@@ -1712,568 +1711,568 @@ yyreduce:
   case 2:
 #line 70 "a.y"
                             { ; }
-#line 1716 "y.tab.c"
+#line 1715 "y.tab.c"
     break;
 
   case 3:
 #line 71 "a.y"
-                            { printf(">> %s = %g\n",(yyvsp[-2].ptrSimbolo)->nombre, (yyvsp[-2].ptrSimbolo)->valor); }
-#line 1722 "y.tab.c"
+                            { printf(">> %s = %g\n",(yyvsp[-2].pReal)->name, (yyvsp[-2].pReal)->value); }
+#line 1721 "y.tab.c"
     break;
 
   case 4:
 #line 72 "a.y"
-                            { printf(">> %s = %f\n",(yyvsp[-2].ptrSimbolo)->nombre, (yyvsp[-2].ptrSimbolo)->valor); }
-#line 1728 "y.tab.c"
+                            { printf(">> %s = %f\n",(yyvsp[-2].pReal)->name, (yyvsp[-2].pReal)->value); }
+#line 1727 "y.tab.c"
     break;
 
   case 5:
 #line 73 "a.y"
-                            { printf(">> %g\n", (yyvsp[-2].numero)); }
-#line 1734 "y.tab.c"
+                            { printf(">> %g\n", (yyvsp[-2].real_s)); }
+#line 1733 "y.tab.c"
     break;
 
   case 6:
 #line 74 "a.y"
-                            { printf(">> %f\n", (yyvsp[-2].numero)); }
-#line 1740 "y.tab.c"
+                            { printf(">> %f\n", (yyvsp[-2].real_s)); }
+#line 1739 "y.tab.c"
     break;
 
   case 7:
 #line 75 "a.y"
                             { ; }
-#line 1746 "y.tab.c"
+#line 1745 "y.tab.c"
     break;
 
   case 8:
 #line 76 "a.y"
-                            { printf(">> %s = [%g, %g, %g]\n",(yyvsp[-2].ptrSimboloVector)->nombre, (yyvsp[-2].ptrSimboloVector)->valor[0], (yyvsp[-2].ptrSimboloVector)->valor[1], (yyvsp[-2].ptrSimboloVector)->valor[2]); }
-#line 1752 "y.tab.c"
+                            { printf(">> %s = [%g, %g, %g]\n",(yyvsp[-2].pVector)->name, (yyvsp[-2].pVector)->value[0], (yyvsp[-2].pVector)->value[1], (yyvsp[-2].pVector)->value[2]); }
+#line 1751 "y.tab.c"
     break;
 
   case 9:
 #line 77 "a.y"
-                            { printf(">> %s = [%f, %f, %f]\n",(yyvsp[-2].ptrSimboloVector)->nombre, (yyvsp[-2].ptrSimboloVector)->valor[0], (yyvsp[-2].ptrSimboloVector)->valor[1], (yyvsp[-2].ptrSimboloVector)->valor[2]); }
-#line 1758 "y.tab.c"
+                            { printf(">> %s = [%f, %f, %f]\n",(yyvsp[-2].pVector)->name, (yyvsp[-2].pVector)->value[0], (yyvsp[-2].pVector)->value[1], (yyvsp[-2].pVector)->value[2]); }
+#line 1757 "y.tab.c"
     break;
 
   case 10:
 #line 78 "a.y"
-                            { printf(">> %g, %g, %g\n", (yyvsp[-2].vector)[0], (yyvsp[-2].vector)[1], (yyvsp[-2].vector)[2]); }
-#line 1764 "y.tab.c"
+                            { printf(">> %g, %g, %g\n", (yyvsp[-2].vector_s)[0], (yyvsp[-2].vector_s)[1], (yyvsp[-2].vector_s)[2]); }
+#line 1763 "y.tab.c"
     break;
 
   case 11:
 #line 79 "a.y"
-                            { printf(">> %f, %f, %f\n", (yyvsp[-2].vector)[0], (yyvsp[-2].vector)[1], (yyvsp[-2].vector)[2]); }
-#line 1770 "y.tab.c"
+                            { printf(">> %f, %f, %f\n", (yyvsp[-2].vector_s)[0], (yyvsp[-2].vector_s)[1], (yyvsp[-2].vector_s)[2]); }
+#line 1769 "y.tab.c"
     break;
 
   case 12:
 #line 80 "a.y"
-                            { imprimir(t,0); imprimirVector(v,0); }
-#line 1776 "y.tab.c"
+                            { printReal(t,0); printVector(v,0); }
+#line 1775 "y.tab.c"
     break;
 
   case 13:
 #line 81 "a.y"
-                            { imprimir(t,1); imprimirVector(v,1); }
-#line 1782 "y.tab.c"
+                            { printReal(t,1); printVector(v,1); }
+#line 1781 "y.tab.c"
     break;
 
   case 14:
 #line 82 "a.y"
-                            { imprimirConstantes(); }
-#line 1788 "y.tab.c"
+                            { printConsts(); }
+#line 1787 "y.tab.c"
     break;
 
   case 15:
 #line 83 "a.y"
                             { v = NULL; t = NULL; }
-#line 1794 "y.tab.c"
+#line 1793 "y.tab.c"
     break;
 
   case 16:
 #line 84 "a.y"
                             { ClearScreen(); }
-#line 1800 "y.tab.c"
+#line 1799 "y.tab.c"
     break;
 
   case 17:
 #line 85 "a.y"
                             { exit (EXIT_SUCCESS); }
-#line 1806 "y.tab.c"
+#line 1805 "y.tab.c"
     break;
 
   case 18:
 #line 86 "a.y"
                             { 
-                              printf("E: Verifica entrada o tipo entre las operaciones\n");
+                              printf("E: Something is missing (';')\n");
                               yyerrok; 
                             }
-#line 1815 "y.tab.c"
+#line 1814 "y.tab.c"
     break;
 
   case 20:
 #line 94 "a.y"
                             {
-                                (yyval.numero) = (yyvsp[0].numero);
-                                (yyvsp[-2].ptrSimbolo)->valor = (yyvsp[0].numero);
+                                (yyval.real_s) = (yyvsp[0].real_s);
+                                (yyvsp[-2].pReal)->value = (yyvsp[0].real_s);
                             }
-#line 1824 "y.tab.c"
+#line 1823 "y.tab.c"
     break;
 
   case 21:
 #line 98 "a.y"
                             {
-                                (yyval.numero) = (yyvsp[0].numero);
-                                (yyvsp[-2].ptrSimbolo)->valor = (yyvsp[0].numero);
+                                (yyval.real_s) = (yyvsp[0].real_s);
+                                (yyvsp[-2].pReal)->value = (yyvsp[0].real_s);
                             }
-#line 1833 "y.tab.c"
+#line 1832 "y.tab.c"
     break;
 
   case 22:
 #line 105 "a.y"
                             {
-                                memcpy((yyval.vector), (yyvsp[0].vector), 3*sizeof(double));
-                                (yyvsp[-2].ptrSimboloVector)->valor[0] = (yyvsp[0].vector)[0];
-                                (yyvsp[-2].ptrSimboloVector)->valor[1] = (yyvsp[0].vector)[1];
-                                (yyvsp[-2].ptrSimboloVector)->valor[2] = (yyvsp[0].vector)[2];
+                                memcpy((yyval.vector_s), (yyvsp[0].vector_s), 3*sizeof(double));
+                                (yyvsp[-2].pVector)->value[0] = (yyvsp[0].vector_s)[0];
+                                (yyvsp[-2].pVector)->value[1] = (yyvsp[0].vector_s)[1];
+                                (yyvsp[-2].pVector)->value[2] = (yyvsp[0].vector_s)[2];
                             }
-#line 1844 "y.tab.c"
+#line 1843 "y.tab.c"
     break;
 
   case 23:
 #line 111 "a.y"
                             {
-                                memcpy((yyval.vector), (yyvsp[0].vector), 3*sizeof(double));
-                                (yyvsp[-2].ptrSimboloVector)->valor[0] = (yyvsp[0].vector)[0];
-                                (yyvsp[-2].ptrSimboloVector)->valor[1] = (yyvsp[0].vector)[1];
-                                (yyvsp[-2].ptrSimboloVector)->valor[2] = (yyvsp[0].vector)[2];
+                                memcpy((yyval.vector_s), (yyvsp[0].vector_s), 3*sizeof(double));
+                                (yyvsp[-2].pVector)->value[0] = (yyvsp[0].vector_s)[0];
+                                (yyvsp[-2].pVector)->value[1] = (yyvsp[0].vector_s)[1];
+                                (yyvsp[-2].pVector)->value[2] = (yyvsp[0].vector_s)[2];
                             }
-#line 1855 "y.tab.c"
+#line 1854 "y.tab.c"
     break;
 
   case 24:
 #line 117 "a.y"
-                            { (yyvsp[-3].ptrSimboloVector)->valor[0] = (yyvsp[0].numero); }
-#line 1861 "y.tab.c"
+                               { (yyvsp[-3].pVector)->value[0] = (yyvsp[0].real_s); }
+#line 1860 "y.tab.c"
     break;
 
   case 25:
 #line 118 "a.y"
-                            { (yyvsp[-3].ptrSimboloVector)->valor[1] = (yyvsp[0].numero); }
-#line 1867 "y.tab.c"
+                               { (yyvsp[-3].pVector)->value[1] = (yyvsp[0].real_s); }
+#line 1866 "y.tab.c"
     break;
 
   case 26:
 #line 119 "a.y"
-                            { (yyvsp[-3].ptrSimboloVector)->valor[2] = (yyvsp[0].numero); }
-#line 1873 "y.tab.c"
+                               { (yyvsp[-3].pVector)->value[2] = (yyvsp[0].real_s); }
+#line 1872 "y.tab.c"
     break;
 
   case 27:
 #line 140 "a.y"
-                                    { (yyval.numero) = (yyvsp[-2].numero) + (yyvsp[0].numero); }
-#line 1879 "y.tab.c"
+                                    { (yyval.real_s) = (yyvsp[-2].real_s) + (yyvsp[0].real_s); }
+#line 1878 "y.tab.c"
     break;
 
   case 28:
 #line 141 "a.y"
-                                        { (yyval.numero) = (yyvsp[-2].numero) - (yyvsp[0].numero); }
-#line 1885 "y.tab.c"
+                                        { (yyval.real_s) = (yyvsp[-2].real_s) - (yyvsp[0].real_s); }
+#line 1884 "y.tab.c"
     break;
 
   case 29:
 #line 142 "a.y"
-                                        { (yyval.numero) = (yyvsp[-2].numero) * (yyvsp[0].numero); }
-#line 1891 "y.tab.c"
+                                        { (yyval.real_s) = (yyvsp[-2].real_s) * (yyvsp[0].real_s); }
+#line 1890 "y.tab.c"
     break;
 
   case 30:
 #line 143 "a.y"
                                         {
-                                if((yyvsp[0].numero) == 0){
-                                    printf("E: División por cero\n");
-                                    (yyval.numero) = 0;
+                                if((yyvsp[0].real_s) == 0){
+                                    printf("E: Division by zero\n");
+                                    (yyval.real_s) = 0;
                                 }else{
-                                    (yyval.numero) = (yyvsp[-2].numero) / (yyvsp[0].numero);
+                                    (yyval.real_s) = (yyvsp[-2].real_s) / (yyvsp[0].real_s);
                                 }
                             }
-#line 1904 "y.tab.c"
+#line 1903 "y.tab.c"
     break;
 
   case 31:
 #line 151 "a.y"
-                                        { (yyval.numero) = (yyvsp[-1].numero); }
-#line 1910 "y.tab.c"
+                                        { (yyval.real_s) = (yyvsp[-1].real_s); }
+#line 1909 "y.tab.c"
     break;
 
   case 32:
 #line 152 "a.y"
-                                        { (yyval.numero) = pow((yyvsp[-2].numero),(yyvsp[0].numero)); }
-#line 1916 "y.tab.c"
+                                        { (yyval.real_s) = pow((yyvsp[-2].real_s),(yyvsp[0].real_s)); }
+#line 1915 "y.tab.c"
     break;
 
   case 33:
 #line 153 "a.y"
-                                    { (yyval.numero) = -(yyvsp[0].numero); }
-#line 1922 "y.tab.c"
+                                    { (yyval.real_s) = -(yyvsp[0].real_s); }
+#line 1921 "y.tab.c"
     break;
 
   case 34:
 #line 154 "a.y"
-                                        { (yyval.numero) = (int)(yyvsp[-2].numero) % (int)(yyvsp[0].numero); }
-#line 1928 "y.tab.c"
+                                        { (yyval.real_s) = (int)(yyvsp[-2].real_s) % (int)(yyvsp[0].real_s); }
+#line 1927 "y.tab.c"
     break;
 
   case 35:
 #line 155 "a.y"
-                                    { (yyval.numero) = factorial((yyvsp[-1].numero)); }
-#line 1934 "y.tab.c"
+                                    { (yyval.real_s) = factorial((yyvsp[-1].real_s)); }
+#line 1933 "y.tab.c"
     break;
 
   case 36:
 #line 158 "a.y"
-                            { (yyval.numero) = (yyvsp[-1].ptrSimboloVector)->valor[0]; }
-#line 1940 "y.tab.c"
+                            { (yyval.real_s) = (yyvsp[-1].pVector)->value[0]; }
+#line 1939 "y.tab.c"
     break;
 
   case 37:
 #line 159 "a.y"
-                            { (yyval.numero) = (yyvsp[-1].ptrSimboloVector)->valor[1]; }
-#line 1946 "y.tab.c"
+                            { (yyval.real_s) = (yyvsp[-1].pVector)->value[1]; }
+#line 1945 "y.tab.c"
     break;
 
   case 38:
 #line 160 "a.y"
-                            { (yyval.numero) = (yyvsp[-1].ptrSimboloVector)->valor[2]; }
-#line 1952 "y.tab.c"
+                            { (yyval.real_s) = (yyvsp[-1].pVector)->value[2]; }
+#line 1951 "y.tab.c"
     break;
 
   case 39:
 #line 163 "a.y"
-                                { (yyval.numero) = cos((yyvsp[-1].numero)); }
-#line 1958 "y.tab.c"
+                                { (yyval.real_s) = cos((yyvsp[-1].real_s)); }
+#line 1957 "y.tab.c"
     break;
 
   case 40:
 #line 164 "a.y"
-                            { (yyval.numero) = acos((yyvsp[-1].numero)); }
-#line 1964 "y.tab.c"
+                            { (yyval.real_s) = acos((yyvsp[-1].real_s)); }
+#line 1963 "y.tab.c"
     break;
 
   case 41:
 #line 165 "a.y"
-                            { (yyval.numero) = cosh((yyvsp[-1].numero)); }
-#line 1970 "y.tab.c"
+                            { (yyval.real_s) = cosh((yyvsp[-1].real_s)); }
+#line 1969 "y.tab.c"
     break;
 
   case 42:
 #line 166 "a.y"
-                            { (yyval.numero) = acosh((yyvsp[-1].numero)); }
-#line 1976 "y.tab.c"
+                            { (yyval.real_s) = acosh((yyvsp[-1].real_s)); }
+#line 1975 "y.tab.c"
     break;
 
   case 43:
 #line 167 "a.y"
-                                { (yyval.numero) = sin((yyvsp[-1].numero)); }
-#line 1982 "y.tab.c"
+                                { (yyval.real_s) = sin((yyvsp[-1].real_s)); }
+#line 1981 "y.tab.c"
     break;
 
   case 44:
 #line 168 "a.y"
-                            { (yyval.numero) = asin((yyvsp[-1].numero)); }
-#line 1988 "y.tab.c"
+                            { (yyval.real_s) = asin((yyvsp[-1].real_s)); }
+#line 1987 "y.tab.c"
     break;
 
   case 45:
 #line 169 "a.y"
-                            { (yyval.numero) = sinh((yyvsp[-1].numero)); }
-#line 1994 "y.tab.c"
+                            { (yyval.real_s) = sinh((yyvsp[-1].real_s)); }
+#line 1993 "y.tab.c"
     break;
 
   case 46:
 #line 170 "a.y"
-                            { (yyval.numero) = asinh((yyvsp[-1].numero)); }
-#line 2000 "y.tab.c"
+                            { (yyval.real_s) = asinh((yyvsp[-1].real_s)); }
+#line 1999 "y.tab.c"
     break;
 
   case 47:
 #line 171 "a.y"
-                                { (yyval.numero) = tan((yyvsp[-1].numero)); }
-#line 2006 "y.tab.c"
+                                { (yyval.real_s) = tan((yyvsp[-1].real_s)); }
+#line 2005 "y.tab.c"
     break;
 
   case 48:
 #line 172 "a.y"
-                            { (yyval.numero) = atan((yyvsp[-1].numero)); }
-#line 2012 "y.tab.c"
+                            { (yyval.real_s) = atan((yyvsp[-1].real_s)); }
+#line 2011 "y.tab.c"
     break;
 
   case 49:
 #line 173 "a.y"
-                            { (yyval.numero) = tanh((yyvsp[-1].numero)); }
-#line 2018 "y.tab.c"
+                            { (yyval.real_s) = tanh((yyvsp[-1].real_s)); }
+#line 2017 "y.tab.c"
     break;
 
   case 50:
 #line 174 "a.y"
-                            { (yyval.numero) = atanh((yyvsp[-1].numero)); }
-#line 2024 "y.tab.c"
+                            { (yyval.real_s) = atanh((yyvsp[-1].real_s)); }
+#line 2023 "y.tab.c"
     break;
 
   case 51:
 #line 177 "a.y"
-                                { (yyval.numero) = fabs((yyvsp[-1].numero)); }
-#line 2030 "y.tab.c"
+                                { (yyval.real_s) = fabs((yyvsp[-1].real_s)); }
+#line 2029 "y.tab.c"
     break;
 
   case 52:
 #line 178 "a.y"
-                            { (yyval.numero) = fabs((yyvsp[-1].numero)); }
-#line 2036 "y.tab.c"
+                            { (yyval.real_s) = fabs((yyvsp[-1].real_s)); }
+#line 2035 "y.tab.c"
     break;
 
   case 53:
 #line 179 "a.y"
-                                { (yyval.numero) = exp((yyvsp[-1].numero)); }
-#line 2042 "y.tab.c"
+                                { (yyval.real_s) = exp((yyvsp[-1].real_s)); }
+#line 2041 "y.tab.c"
     break;
 
   case 54:
 #line 180 "a.y"
-                                { (yyval.numero) = log((yyvsp[-1].numero)); }
-#line 2048 "y.tab.c"
+                                { (yyval.real_s) = log((yyvsp[-1].real_s)); }
+#line 2047 "y.tab.c"
     break;
 
   case 55:
 #line 181 "a.y"
-                            { (yyval.numero) = log((yyvsp[-3].numero))/log((yyvsp[-1].numero)); }
-#line 2054 "y.tab.c"
+                            { (yyval.real_s) = log((yyvsp[-3].real_s))/log((yyvsp[-1].real_s)); }
+#line 2053 "y.tab.c"
     break;
 
   case 56:
 #line 182 "a.y"
-                                { (yyval.numero) = sqrt((yyvsp[-1].numero)); }
-#line 2060 "y.tab.c"
+                                { (yyval.real_s) = sqrt((yyvsp[-1].real_s)); }
+#line 2059 "y.tab.c"
     break;
 
   case 57:
 #line 183 "a.y"
-                                { (yyval.numero) = ceil((yyvsp[-1].numero)); }
-#line 2066 "y.tab.c"
+                                { (yyval.real_s) = ceil((yyvsp[-1].real_s)); }
+#line 2065 "y.tab.c"
     break;
 
   case 58:
 #line 184 "a.y"
-                                { (yyval.numero) = floor((yyvsp[-1].numero)); }
-#line 2072 "y.tab.c"
+                                { (yyval.real_s) = floor((yyvsp[-1].real_s)); }
+#line 2071 "y.tab.c"
     break;
 
   case 59:
 #line 185 "a.y"
                             {
                                 srand(time(NULL));
-                                (yyval.numero)=rand()%(int)(((yyvsp[-1].numero)-(yyvsp[-3].numero)+1)+(yyvsp[-3].numero));
+                                (yyval.real_s)=rand()%(int)(((yyvsp[-1].real_s)-(yyvsp[-3].real_s)+1)+(yyvsp[-3].real_s));
                             }
-#line 2081 "y.tab.c"
+#line 2080 "y.tab.c"
     break;
 
   case 60:
 #line 189 "a.y"
-                            { (yyval.numero) = mcd((yyvsp[-3].numero),(yyvsp[-1].numero)); }
-#line 2087 "y.tab.c"
+                            { (yyval.real_s) = gcd((yyvsp[-3].real_s),(yyvsp[-1].real_s)); }
+#line 2086 "y.tab.c"
     break;
 
   case 61:
 #line 190 "a.y"
-                            { (yyval.numero) = mcm((yyvsp[-3].numero),(yyvsp[-1].numero)); }
-#line 2093 "y.tab.c"
+                            { (yyval.real_s) = lcm((yyvsp[-3].real_s),(yyvsp[-1].real_s)); }
+#line 2092 "y.tab.c"
     break;
 
   case 62:
 #line 191 "a.y"
-                            { (yyval.numero) = nthPrimo((int)(yyvsp[-1].numero)); }
-#line 2099 "y.tab.c"
+                            { (yyval.real_s) = nthPrime((int)(yyvsp[-1].real_s)); }
+#line 2098 "y.tab.c"
     break;
 
   case 63:
 #line 192 "a.y"
-                            { (yyval.numero) = nthFibonacci((int)(yyvsp[-1].numero)); }
-#line 2105 "y.tab.c"
+                            { (yyval.real_s) = nthFibonacci((int)(yyvsp[-1].real_s)); }
+#line 2104 "y.tab.c"
     break;
 
   case 64:
 #line 195 "a.y"
-                            { (yyval.numero) = productoInterno((yyvsp[-2].vector), (yyvsp[0].vector)); }
-#line 2111 "y.tab.c"
+                            { (yyval.real_s) = dotProduct((yyvsp[-2].vector_s), (yyvsp[0].vector_s)); }
+#line 2110 "y.tab.c"
     break;
 
   case 65:
 #line 196 "a.y"
-                            { (yyval.numero) = norma((yyvsp[-1].vector)); }
-#line 2117 "y.tab.c"
+                            { (yyval.real_s) = magnitude((yyvsp[-1].vector_s)); }
+#line 2116 "y.tab.c"
     break;
 
   case 66:
 #line 197 "a.y"
-                            { (yyval.numero) = norma((yyvsp[-1].vector)); }
-#line 2123 "y.tab.c"
+                            { (yyval.real_s) = magnitude((yyvsp[-1].vector_s)); }
+#line 2122 "y.tab.c"
     break;
 
   case 67:
 #line 198 "a.y"
-                            { (yyval.numero) = distanciaVector((yyvsp[-3].vector), (yyvsp[-1].vector)); }
-#line 2129 "y.tab.c"
+                            { (yyval.real_s) = distanceVector((yyvsp[-3].vector_s), (yyvsp[-1].vector_s)); }
+#line 2128 "y.tab.c"
     break;
 
   case 68:
 #line 199 "a.y"
-                            { (yyval.numero) = fabs((yyvsp[-1].numero) - (yyvsp[-3].numero)); }
-#line 2135 "y.tab.c"
+                            { (yyval.real_s) = fabs((yyvsp[-1].real_s) - (yyvsp[-3].real_s)); }
+#line 2134 "y.tab.c"
     break;
 
   case 69:
 #line 202 "a.y"
-                            { (yyval.numero) = M_PI; }
-#line 2141 "y.tab.c"
+                            { (yyval.real_s) = M_PI; }
+#line 2140 "y.tab.c"
     break;
 
   case 70:
 #line 203 "a.y"
-                            { (yyval.numero) = M_G; }
-#line 2147 "y.tab.c"
+                            { (yyval.real_s) = M_G; }
+#line 2146 "y.tab.c"
     break;
 
   case 71:
 #line 204 "a.y"
-                            { (yyval.numero) = M_K; }
-#line 2153 "y.tab.c"
+                            { (yyval.real_s) = M_K; }
+#line 2152 "y.tab.c"
     break;
 
   case 72:
 #line 205 "a.y"
-                            { (yyval.numero) = M_VLUZ; }
-#line 2159 "y.tab.c"
+                            { (yyval.real_s) = M_VLIGHT; }
+#line 2158 "y.tab.c"
     break;
 
   case 73:
 #line 206 "a.y"
-                            { (yyval.numero) = M_ELECTRON; }
-#line 2165 "y.tab.c"
+                            { (yyval.real_s) = M_ELECTRON; }
+#line 2164 "y.tab.c"
     break;
 
   case 74:
 #line 207 "a.y"
-                            { (yyval.numero) = -M_ELECTRON; }
-#line 2171 "y.tab.c"
+                            { (yyval.real_s) = -M_ELECTRON; }
+#line 2170 "y.tab.c"
     break;
 
   case 75:
 #line 208 "a.y"
-                            { (yyval.numero) = 0; }
-#line 2177 "y.tab.c"
+                            { (yyval.real_s) = 0; }
+#line 2176 "y.tab.c"
     break;
 
   case 76:
 #line 209 "a.y"
-                            { (yyval.numero) = M_EULER; }
-#line 2183 "y.tab.c"
+                            { (yyval.real_s) = M_EULER; }
+#line 2182 "y.tab.c"
     break;
 
   case 77:
 #line 211 "a.y"
-                            { (yyval.numero) = (yyvsp[0].ptrSimbolo)->valor; }
-#line 2189 "y.tab.c"
+                            { (yyval.real_s) = (yyvsp[0].pReal)->value; }
+#line 2188 "y.tab.c"
     break;
 
   case 78:
 #line 212 "a.y"
-                            { (yyval.numero) = (yyvsp[0].numero); }
-#line 2195 "y.tab.c"
+                            { (yyval.real_s) = (yyvsp[0].real_s); }
+#line 2194 "y.tab.c"
     break;
 
   case 79:
 #line 216 "a.y"
-                            { (yyval.vector)[0] = (yyvsp[-5].numero); (yyval.vector)[1] = (yyvsp[-3].numero); (yyval.vector)[2] = (yyvsp[-1].numero); }
-#line 2201 "y.tab.c"
+                            { (yyval.vector_s)[0] = (yyvsp[-5].real_s); (yyval.vector_s)[1] = (yyvsp[-3].real_s); (yyval.vector_s)[2] = (yyvsp[-1].real_s); }
+#line 2200 "y.tab.c"
     break;
 
   case 80:
 #line 217 "a.y"
-                            { (yyval.vector)[0] = (yyvsp[-3].numero); (yyval.vector)[1] = (yyvsp[-1].numero); }
-#line 2207 "y.tab.c"
+                            { (yyval.vector_s)[0] = (yyvsp[-3].real_s); (yyval.vector_s)[1] = (yyvsp[-1].real_s); }
+#line 2206 "y.tab.c"
     break;
 
   case 81:
 #line 218 "a.y"
-                            { (yyval.vector)[0] = (yyvsp[-1].numero); }
-#line 2213 "y.tab.c"
+                            { (yyval.vector_s)[0] = (yyvsp[-1].real_s); }
+#line 2212 "y.tab.c"
     break;
 
   case 82:
 #line 219 "a.y"
-                            { sumaVector((yyval.vector), (yyvsp[-2].vector), (yyvsp[0].vector)); }
-#line 2219 "y.tab.c"
+                            { addVector((yyval.vector_s), (yyvsp[-2].vector_s), (yyvsp[0].vector_s)); }
+#line 2218 "y.tab.c"
     break;
 
   case 83:
 #line 220 "a.y"
-                            { restaVector((yyval.vector), (yyvsp[-2].vector), (yyvsp[0].vector)); }
-#line 2225 "y.tab.c"
+                            { minusVector((yyval.vector_s), (yyvsp[-2].vector_s), (yyvsp[0].vector_s)); }
+#line 2224 "y.tab.c"
     break;
 
   case 84:
 #line 221 "a.y"
-                            { escalarVector((yyval.vector), (yyvsp[0].vector), (yyvsp[-2].numero));}
-#line 2231 "y.tab.c"
+                            { escalarVector((yyval.vector_s), (yyvsp[0].vector_s), (yyvsp[-2].real_s));}
+#line 2230 "y.tab.c"
     break;
 
   case 85:
 #line 222 "a.y"
-                            { escalarVector((yyval.vector), (yyvsp[0].vector), -1.0); }
-#line 2237 "y.tab.c"
+                            { escalarVector((yyval.vector_s), (yyvsp[0].vector_s), -1.0); }
+#line 2236 "y.tab.c"
     break;
 
   case 86:
 #line 224 "a.y"
-                            { productoVectorial((yyval.vector), (yyvsp[-3].vector), (yyvsp[-1].vector)); }
-#line 2243 "y.tab.c"
+                            { crossProduct((yyval.vector_s), (yyvsp[-3].vector_s), (yyvsp[-1].vector_s)); }
+#line 2242 "y.tab.c"
     break;
 
   case 87:
 #line 225 "a.y"
-                            { proyeccionVector((yyval.vector), (yyvsp[-3].vector), (yyvsp[-1].vector)); }
-#line 2249 "y.tab.c"
+                            { projectionVector((yyval.vector_s), (yyvsp[-3].vector_s), (yyvsp[-1].vector_s)); }
+#line 2248 "y.tab.c"
     break;
 
   case 88:
 #line 226 "a.y"
-                            { normalVector((yyval.vector), (yyvsp[-3].vector), (yyvsp[-1].vector)); }
-#line 2255 "y.tab.c"
+                            { normalVector((yyval.vector_s), (yyvsp[-3].vector_s), (yyvsp[-1].vector_s)); }
+#line 2254 "y.tab.c"
     break;
 
   case 89:
 #line 227 "a.y"
-                            { unitarioVector((yyval.vector), (yyvsp[-1].vector)); }
-#line 2261 "y.tab.c"
+                            { unitVector((yyval.vector_s), (yyvsp[-1].vector_s)); }
+#line 2260 "y.tab.c"
     break;
 
   case 90:
 #line 229 "a.y"
-                            { memcpy((yyval.vector), (yyvsp[0].ptrSimboloVector)->valor, VECTOR_SZ); }
-#line 2267 "y.tab.c"
+                            { memcpy((yyval.vector_s), (yyvsp[0].pVector)->value, VECTOR_SZ); }
+#line 2266 "y.tab.c"
     break;
 
   case 91:
 #line 230 "a.y"
-                            { memcpy((yyval.vector), (yyvsp[0].vector), VECTOR_SZ); }
-#line 2273 "y.tab.c"
+                            { memcpy((yyval.vector_s), (yyvsp[0].vector_s), VECTOR_SZ); }
+#line 2272 "y.tab.c"
     break;
 
 
-#line 2277 "y.tab.c"
+#line 2276 "y.tab.c"
 
       default: break;
     }
@@ -2512,7 +2511,8 @@ yyreturn:
 
 int main()
 {
-    t = crear();
+    t = create();
+    v = createVector();
     //Input feedback
     printf("Calcpreter 0.0.1\n<< ");
     yyparse();

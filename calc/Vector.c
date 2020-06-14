@@ -27,7 +27,7 @@ vector *searchVector(vector *t, char _name[20])
 
 void printVector(vector *t, int type)
 {
-    printf("\n   []:\n");
+    printf("\n[Vectors]:\n");
     while (t != NULL)
     {
         switch (type)
@@ -85,7 +85,7 @@ double dotProduct(double *a, double *b)
 //Norma de un vector
 double magnitude(double *a)
 {
-    return sqrt(productoInterno(a, a));
+    return sqrt(dotProduct(a, a));
 }
 
 //Producto cruz o vectorial
@@ -97,7 +97,7 @@ void crossProduct(double *target, double *a, double *b)
 }
 
 //Distancia entre vectores
-double distanciaVector(double *a, double *b)
+double distanceVector(double *a, double *b)
 {
     double temp[3];
     minusVector(temp, a, b);
@@ -114,12 +114,12 @@ double projectionVector(double *target, double *a, double *b)
 //Vector normal
 double normalVector(double *target, double *a, double *b)
 {
-    proyeccionVector(target, a, b);
+    projectionVector(target, a, b);
     minusVector(target, b, target);
 }
 
 //Vector unitario
 double unitVector(double *target, double *a)
 {
-    escalarVector(target, a, 1 / norma(a));
+    escalarVector(target, a, 1 / magnitude(a));
 }

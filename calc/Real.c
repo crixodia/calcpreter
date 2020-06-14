@@ -45,16 +45,16 @@ real *search(real *t, char name[20])
 //Prints table of real variables
 void printReal(real *t, int type)
 {
-    printf("Reals:");
+    printf("Reals:\n");
     while (t != NULL)
     {
         switch (type)
         {
         case 0: //g
-            printf("%s = %g\n", t->name, t->value);
+            printf("\t%s = %g\n", t->name, t->value);
             break;
         case 1: //f
-            printf("%s = %f\n", t->name, t->value);
+            printf("\t%s = %f\n", t->name, t->value);
             break;
         }
         t = t->sig;
@@ -112,5 +112,23 @@ int factorial(int n)
 //Prints a table with all constants given a file
 void printConsts()
 {
-    //TODO
+    char c;
+    FILE *file;
+
+#ifdef _WIN32
+    file = fopen("csv\\constants.csv", "r");
+#else
+    file = fopen("csv/constants.csv", "r");
+#endif
+
+    if (file)
+    {
+        while ((c = fgetc(file)) != EOF)
+            printf("%c", c);
+        fclose(file);
+    }
+    else
+    {
+        printf("E: File (%s) doesn't exist [error code: f-001]\n", file);
+    }
 }

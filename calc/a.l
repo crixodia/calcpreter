@@ -65,7 +65,7 @@
 "#neut"                     { return neutron; }
 
 [0-9]+\.?[0-9]*             {
-                                yylval.real = strtod(yytext, NULL);
+                                yylval.real_s = strtod(yytext, NULL);
                                 return REAL;
                             }
 
@@ -75,19 +75,18 @@
                                     yylval.pReal = (real *) malloc(sizeof(real));
                                     strcpy(yylval.pReal->name, yytext);
                                     yylval.pReal->value = 0;
-                                    insertar(&t, yylval.pReal);
+                                    insert(&t, yylval.pReal);
                                 }
                                 return id;
                             }
 
 \[[a-zA-Z][a-zA-Z0-9]*\]    {
+                                double a[3] = {0,0,0};
                             	yylval.pVector = searchVector(v, yytext);
                                 if (yylval.pVector == NULL) {
                                     yylval.pVector = (vector *) malloc(sizeof(vector));
                                     strcpy(yylval.pVector->name, yytext);
-                                    yylval.pVector->value[0] = 0;
-                                    yylval.pVector->value[1] = 0;
-                                    yylval.pVector->value[2] = 0;
+                                    memcpy(yylval.pVector->value, a, 3*sizeof(double));
                                     insertVector(&v, yylval.pVector);
                                 }
                                 return id_vector;
