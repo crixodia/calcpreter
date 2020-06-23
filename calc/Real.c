@@ -129,6 +129,6 @@ void printConsts()
     }
     else
     {
-        printf("E: File (%s) doesn't exist [error code: f-001]\n", file);
+        printf("E: File doesn't exist [error code: f-001]\n");
     }
 }

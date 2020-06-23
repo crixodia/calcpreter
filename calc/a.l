@@ -1,11 +1,15 @@
+identifiers                 [a-zA-Z][a-zA-Z0-9]*
+real_number                 [0-9]+\.?[0-9]*
+
 %option noyywrap
+
 %%
 "="                         { return asg; }
 
 "all"                       { return all; }
 
 "delete"                    { return del; }
-"cls"|"clear"               { return clc; }
+"cls"|"clear"|"clc"         { return clc; }
 "consts"                    { return consts; }
 "list"                      { return list; }
 "listd"                     { return listd; }
@@ -39,6 +43,9 @@
 "sqrt"                      { return SQRT; }
 "ceil"                      { return CEIL; }
 "floor"                     { return FLOOR; }
+"round"                     { return ROUND; }
+"fix"                       { return FIX; }
+"mod"                       { return MOD; }
 
 "exp"                       { return EXP; }
 "ln"                        { return LN; }
@@ -64,12 +71,12 @@
 "#prot"                     { return proton; }
 "#neut"                     { return neutron; }
 
-[0-9]+\.?[0-9]*             {
+{real_number}               {
                                 yylval.real_s = strtod(yytext, NULL);
                                 return REAL;
                             }
 
-[a-zA-Z][a-zA-Z0-9]*        {
+{identifiers}               {
                                 yylval.pReal = search(t, yytext);
                                 if (yylval.pReal == NULL) {
                                     yylval.pReal = (real *) malloc(sizeof(real));
@@ -80,7 +87,7 @@
                                 return id;
                             }
 
-\[[a-zA-Z][a-zA-Z0-9]*\]    {
+\[{identifiers}\]           {
                                 double a[3] = {0,0,0};
                             	yylval.pVector = searchVector(v, yytext);
                                 if (yylval.pVector == NULL) {
@@ -91,10 +98,11 @@
                                 }
                                 return id_vector;
                             }
-[a-zA-Z][a-zA-Z0-9]*\:      {
+
+{identifiers}\:             {
                                 printf("Line\n");
                             }
-\:[a-zA-Z][a-zA-Z0-9]*\:    {
+\:{identifiers}\:           {
                                 printf("Plane\n");
                             }
 \/\/.*;                     { ; }
