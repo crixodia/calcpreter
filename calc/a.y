@@ -38,13 +38,13 @@
 %token <pVector> id_vector
 
 %token <line_s> LINE
-%token <pLine> ID_RECTA
+%token <pLine> id_line
 
 %token <plane_s> PLANE
-%token <pPlane> ID_PLANO
+%token <pPlane> id_plane
 
 %token asg print printd info infod list listd canoni canonj canonk 
-%token consts del leave clc
+%token consts del leave clc dot
 
 %token all
 
@@ -58,8 +58,8 @@
 
 %type <real_s> expr assign
 %type <vector_s> v_expr v_assign
-/*%type <recta> R AR
-%type <plano> P AP*/
+%type <line_s> l_expr l_assign
+%type <plane_s> p_expr p_assign
 
 %left '+' '-'
 %left '*' '/' '%'
@@ -86,10 +86,11 @@ stmt:stmt assign ';'                    { ; }
                                             printVector(v,1);
                                         }
 |stmt consts ';'                        { printConsts(); }
-|stmt del '(' all ')' ';'               { v = NULL; t = NULL; } //CONFIRMACIÓN?????
+|stmt del '(' all ')' ';'               { 
+                                                v = NULL; t = NULL; 
+                                        }
 |stmt clc ';'                           { ClearScreen(); }
 |stmt leave ';'                         { exit (EXIT_SUCCESS); }
-//|stmt ordenado ';'                    { printf("ord\n");}
 |stmt error ';'                         { 
                                             printf("E: Something is missing. Maybe ';' [error code: s-001] or check your data types [error code: l-001]\n");
                                             yyerrok; 
@@ -97,47 +98,48 @@ stmt:stmt assign ';'                    { ; }
 |/**/
 ;
 
-// Asignaciones
+// Real declaration
 assign:   id asg expr                   { $$ = $3; $1->value = $3; }
 |id asg assign                          { $$ = $3; $1->value = $3; }
 ;
 
-// Asignaciones a vectores
+// Vector declaration
 v_assign:  id_vector asg v_expr         {
                                             memcpy($$, $3, 3*sizeof(double));
-                                            $1->value[0] = $3[0];
-                                            $1->value[1] = $3[1];
-                                            $1->value[2] = $3[2];
+                                            memcpy($1->value, $3, 3*sizeof(double));
                                         }
 |id_vector asg v_assign                 {
                                             memcpy($$, $3, 3*sizeof(double));
-                                            $1->value[0] = $3[0];
-                                            $1->value[1] = $3[1];
-                                            $1->value[2] = $3[2];
+                                            memcpy($1->value, $3, 3*sizeof(double));
                                         }
 |id_vector canoni asg expr              { $1->value[0] = $4; }
 |id_vector canonj asg expr              { $1->value[1] = $4; }
 |id_vector canonk asg expr              { $1->value[2] = $4; }
 ;
 
-// Asignaciones recta
-/*AR: ID_RECTA asig R         {
-
-                            }
-|ID_RECTA asig AR           {
-
-                            }
+// Line declaration
+l_assign: id_line asg l_expr            {
+                                            memcpy($$, $3, 6*sizeof(double));
+                                            memcpy($1->value, $3, 6*sizeof(double));
+                                        }
+|id_line asg l_assign                   {
+                                            memcpy($$, $3, 6*sizeof(double));
+                                            memcpy($1->value, $3, 6*sizeof(double));
+                                        }
 ;
 
-// Asignaciones Plano
-AP: ID_PLANO asig P         {
+// Plane declaration
+p_assign: id_plane asg p_expr           {
+                                            memcpy($$, $3, 9*sizeof(double));
+                                            memcpy($1->value, $3, 9*sizeof(double));
+                                        }
+|id_plane asg p_assign                  {
+                                            memcpy($$, $3, 6*sizeof(double));
+                                            memcpy($1->value, $3, 9*sizeof(double));
+                                        }
+;
 
-                            }
-|ID_PLANO asig AP           {
-
-                            }
-;*/
-// Operaciones con escalares
+// Escarlar operations
 expr:   expr '+' expr		   	        { $$ = $1 + $3; }
 |expr '-' expr			                { $$ = $1 - $3; }
 |expr '*' expr			                { $$ = $1 * $3; }
@@ -158,12 +160,12 @@ expr:   expr '+' expr		   	        { $$ = $1 + $3; }
 |expr '%' expr			                { $$ = (int)$1 % (int)$3; }
 |expr '!'			                    { $$ = factorial($1); }
 
-// Asignación a vectores
+// Vector components asignation
 |id_vector canoni                       { $$ = $1->value[0]; }
 |id_vector canonj                       { $$ = $1->value[1]; }
 |id_vector canonk                       { $$ = $1->value[2]; }
 
-// Funciones trigonométricas        
+// Trigonometric funcs
 |COS '(' expr ')'    	                { $$ = cos($3); }
 |ACOS '(' expr ')'                      { $$ = acos($3); }
 |COSH '(' expr ')'                      { $$ = cosh($3); }
@@ -177,7 +179,7 @@ expr:   expr '+' expr		   	        { $$ = $1 + $3; }
 |TANH '(' expr ')'                      { $$ = tanh($3); }
 |ATANH '(' expr ')'                     { $$ = atanh($3); }
 
-// Funciones        
+// Math regular funcs
 |ABS '(' expr ')'    	                { $$ = fabs($3); }
 |'|' expr '|'    	                    { $$ = fabs($2); }
 |EXP '(' expr ')'    	                { $$ = exp($3); }
@@ -198,14 +200,14 @@ expr:   expr '+' expr		   	        { $$ = $1 + $3; }
 |nthpri '(' expr ')'                    { $$ = nthPrime((int)$3); }
 |nthfib '(' expr ')'                    { $$ = nthFibonacci((int)$3); }
 
-// Entrada: vector, Salida: escalar
+// Vector -> Escalar operations
 |v_expr '*' v_expr                      { $$ = dotProduct($1, $3); }
 |ABS '(' v_expr ')'                     { $$ = magnitude($3); }
 |'|' v_expr '|'                         { $$ = magnitude($2); }
 |distance '(' v_expr ',' v_expr ')'     { $$ = distanceVector($3, $5); }
 |distance '(' expr ',' expr ')'         { $$ = fabs($5 - $3); }
 
-// Constantes
+// Constants
 |pi                                     { $$ = M_PI; }
 |gravi                                  { $$ = M_G; }
 |coulomb                                { $$ = M_K; }
@@ -218,7 +220,7 @@ expr:   expr '+' expr		   	        { $$ = $1 + $3; }
 |REAL                                   { $$ = $1; }
 ;
 
-// Operaciones con vectores
+// Vector operators
 v_expr: '[' expr ',' expr ',' expr ']'  { $$[0] = $2; $$[1] = $4; $$[2] = $6; }
 |'[' expr ',' expr ']'                  { $$[0] = $2; $$[1] = $4; }
 |'[' expr ']'                           { $$[0] = $2; }
@@ -236,8 +238,22 @@ v_expr: '[' expr ',' expr ',' expr ']'  { $$[0] = $2; $$[1] = $4; $$[2] = $6; }
 |VECTOR                                 { memcpy($$, $1, VECTOR_SZ); }
 ;
 
-//ordenado: expr ',' expr     { printf("expr\n"); }
-//|ordenado ',' expr
+// Line operators
+l_expr: '(' v_expr ',' v_expr ')'       { ; }
+|'(' v_expr ',' v_expr ')' dot          { ; }
+|'(' p_expr ',' p_expr ')'              { ; }
+|id_line                                { ; }
+|LINE                                   { ; }
+;
+
+// Plane operators
+p_expr
+:'(' v_expr ',' v_expr ',' v_expr ')'   { ; }
+|'(' v_expr ',' v_expr ',' v_expr ')' dot       { ; }
+|'(' l_expr ',' l_expr ')'              { ; }
+|id_plane                               { ; }
+|PLANE                                  { ; }
+;
 
 %%
 #include "lex.yy.c"

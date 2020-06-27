@@ -23,6 +23,7 @@ real_number                 [0-9]+\.?[0-9]*
 ".i"                        { return canoni; }
 ".j"                        { return canonj; }
 ".k"                        { return canonk; }
+".dot"                      { return dot; }
 
 "cos"                       { return COS; }
 "acos"                      { return ACOS; }

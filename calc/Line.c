@@ -2,8 +2,7 @@ typedef struct line
 {
     struct line *sig;
     char name[20];
-    double punto[3];
-    double direccion[3];
+    double value[6];
 } line;
 
 line *createLine()
