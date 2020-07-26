@@ -99,13 +99,6 @@ real_number                 [0-9]+\.?[0-9]*
                                 }
                                 return id_vector;
                             }
-
-{identifiers}\:             {
-                                printf("Line\n");
-                            }
-\:{identifiers}\:           {
-                                printf("Plane\n");
-                            }
 \/\/.*;                     { ; }
 [ \b\t]+                    { ; /* Sube la linea de abajo para modo archivos */}
 [\n]                        { printf("<< "); /* Comentar para archivos */ }

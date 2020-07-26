@@ -3,14 +3,10 @@
     #include "Clc.c"
     #include "Real.c"
     #include "Vector.c"
-    #include "Line.c"
-    #include "Plane.c"
 
     //Tablas de símbolo
     real * t;
     vector * v;
-    line * r;
-    plane * p;
 
     //Prototipos
     int yylex(void);
@@ -23,12 +19,6 @@
 
     double vector_s[3];
     vector * pVector;
-
-    double line_s[6];
-    line * pLine;
-
-    double plane_s[9];
-    plane * pPlane;
 }
 
 %token <real_s> REAL
@@ -36,12 +26,6 @@
 
 %token <vector_s> VECTOR
 %token <pVector> id_vector
-
-%token <line_s> LINE
-%token <pLine> id_line
-
-%token <plane_s> PLANE
-%token <pPlane> id_plane
 
 %token asg print printd info infod list listd canoni canonj canonk 
 %token consts del leave clc dot
@@ -58,8 +42,6 @@
 
 %type <real_s> expr assign
 %type <vector_s> v_expr v_assign
-%type <line_s> l_expr l_assign
-%type <plane_s> p_expr p_assign
 
 %left '+' '-'
 %left '*' '/' '%'
@@ -115,28 +97,6 @@ v_assign:  id_vector asg v_expr         {
 |id_vector canoni asg expr              { $1->value[0] = $4; }
 |id_vector canonj asg expr              { $1->value[1] = $4; }
 |id_vector canonk asg expr              { $1->value[2] = $4; }
-;
-
-// Line declaration
-l_assign: id_line asg l_expr            {
-                                            memcpy($$, $3, 6*sizeof(double));
-                                            memcpy($1->value, $3, 6*sizeof(double));
-                                        }
-|id_line asg l_assign                   {
-                                            memcpy($$, $3, 6*sizeof(double));
-                                            memcpy($1->value, $3, 6*sizeof(double));
-                                        }
-;
-
-// Plane declaration
-p_assign: id_plane asg p_expr           {
-                                            memcpy($$, $3, 9*sizeof(double));
-                                            memcpy($1->value, $3, 9*sizeof(double));
-                                        }
-|id_plane asg p_assign                  {
-                                            memcpy($$, $3, 6*sizeof(double));
-                                            memcpy($1->value, $3, 9*sizeof(double));
-                                        }
 ;
 
 // Escarlar operations
@@ -236,23 +196,6 @@ v_expr: '[' expr ',' expr ',' expr ']'  { $$[0] = $2; $$[1] = $4; $$[2] = $6; }
 
 |id_vector                              { memcpy($$, $1->value, VECTOR_SZ); }
 |VECTOR                                 { memcpy($$, $1, VECTOR_SZ); }
-;
-
-// Line operators
-l_expr: '(' v_expr ',' v_expr ')'       { ; }
-|'(' v_expr ',' v_expr ')' dot          { ; }
-|'(' p_expr ',' p_expr ')'              { ; }
-|id_line                                { ; }
-|LINE                                   { ; }
-;
-
-// Plane operators
-p_expr
-:'(' v_expr ',' v_expr ',' v_expr ')'   { ; }
-|'(' v_expr ',' v_expr ',' v_expr ')' dot       { ; }
-|'(' l_expr ',' l_expr ')'              { ; }
-|id_plane                               { ; }
-|PLANE                                  { ; }
 ;
 
 %%
