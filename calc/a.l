@@ -6,14 +6,14 @@ real_number                 [0-9]+\.?[0-9]*
 %%
 "="                         { return asg; }
 
-"all"                       { return all; }
+"All"                       { return all; }
 
-"delete"                    { return del; }
-"cls"|"clear"|"clc"         { return clc; }
-"consts"                    { return consts; }
-"list"                      { return list; }
-"listd"                     { return listd; }
-"exit"                      { return leave; }
+"Delete"                    { return del; }
+"Cls"|"Clear"|"Clc"         { return clc; }
+"Consts"                    { return consts; }
+"List"                      { return list; }
+"Listd"                     { return listd; }
+"Exit"                      { return leave; }
 
 ".print"                    { return print; }
 ".printd"                   { return printd; }
@@ -23,45 +23,49 @@ real_number                 [0-9]+\.?[0-9]*
 ".i"                        { return canoni; }
 ".j"                        { return canonj; }
 ".k"                        { return canonk; }
-".dot"                      { return dot; }
 
-"cos"                       { return COS; }
-"acos"                      { return ACOS; }
-"cosh"                      { return COSH; }
-"acosh"                     { return ACOSH; }
+"Cos"                       { return COS; }
+"Acos"                      { return ACOS; }
+"Cosh"                      { return COSH; }
+"Acosh"                     { return ACOSH; }
 
-"sin"|"sen"                 { return SIN; }
-"asin"|"asen"               { return ASIN; }
-"sinh"|"senh"               { return SINH; }
-"asinh"|"asenh"             { return ASINH; }
+"Sin"|"Sen"                 { return SIN; }
+"Asin"|"Asen"               { return ASIN; }
+"Sinh"|"Senh"               { return SINH; }
+"Asinh"|"Asenh"             { return ASINH; }
 
-"tan"|"tg"                  { return TAN; }
-"atan"|"atg"                { return ATAN; }
-"tanh"|"tgh"                { return TANH; }
-"atanh"|"atgh"              { return ATANH; }
+"Tan"|"Tg"                  { return TAN; }
+"Atan"|"Atg"                { return ATAN; }
+"Tanh"|"Tgh"                { return TANH; }
+"Atanh"|"Atgh"              { return ATANH; }
 
-"abs"                       { return ABS; }
-"sqrt"                      { return SQRT; }
-"ceil"                      { return CEIL; }
-"floor"                     { return FLOOR; }
-"round"                     { return ROUND; }
-"fix"                       { return FIX; }
-"mod"                       { return MOD; }
+"Abs"                       { return ABS; }
+"Sqrt"                      { return SQRT; }
+"Ceil"                      { return CEIL; }
+"Floor"                     { return FLOOR; }
+"Round"                     { return ROUND; }
+"Fix"                       { return FIX; }
+"Mod"                       { return MOD; }
 
-"exp"                       { return EXP; }
-"ln"                        { return LN; }
-"log"                       { return LOG; }
+"Exp"                       { return EXP; }
+"Ln"                        { return LN; }
+"Log"                       { return LOG; }
 
-"rnd"                       { return RND; }
-"mcd"                       { return GCD; }
-"mcm"                       { return LCM; }
-"dist"                      { return distance; }
-"nthPri"                    { return nthpri; }
-"nthFib"                    { return nthfib; }
-"gibbs"                     { return pcrux; }
-"unit"                      { return unit; }
-"proy"                      { return proy; }
-"norm"                      { return norm; }
+"Rnd"                       { return RND; }
+"Mcd"                       { return GCD; }
+"Mcm"                       { return LCM; }
+"Dist"                      { return distance; }
+"NthPri"                    { return nthpri; }
+"NthFib"                    { return nthfib; }
+"Gibbs"                     { return pcrux; }
+"Unit"                      { return unit; }
+"Proy"                      { return proy; }
+"Norm"                      { return norm; }
+
+"Cnk"                       { return binomcoef; }
+"Pnk"                       { return permut; }
+
+"BinomialD"                 { return binomd; }
 
 "#pi"|"#pi"                 { return pi; }
 "#e"|"#napier"|"#euler"     { return euler; }

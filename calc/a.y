@@ -28,7 +28,7 @@
 %token <pVector> id_vector
 
 %token asg print printd info infod list listd canoni canonj canonk 
-%token consts del leave clc dot
+%token consts del leave clc
 
 %token all
 
@@ -39,6 +39,8 @@
 
 %token ABS LN SQRT CEIL FLOOR RND GCD EXP LOG LCM ROUND FIX MOD
 %token distance nthpri nthfib pcrux unit proy norm
+
+%token binomcoef permut binomd
 
 %type <real_s> expr assign
 %type <vector_s> v_expr v_assign
@@ -119,6 +121,8 @@ expr:   expr '+' expr		   	        { $$ = $1 + $3; }
 |'-' expr			                    { $$ = -$2; }
 |expr '%' expr			                { $$ = (int)$1 % (int)$3; }
 |expr '!'			                    { $$ = factorial($1); }
+|binomcoef '(' expr ',' expr ')'        { $$ = binomialCoef($3, $5); }
+|permut '(' expr ',' expr')'            { $$ = permutation($3, $5); }
 
 // Vector components asignation
 |id_vector canoni                       { $$ = $1->value[0]; }
@@ -167,6 +171,9 @@ expr:   expr '+' expr		   	        { $$ = $1 + $3; }
 |distance '(' v_expr ',' v_expr ')'     { $$ = distanceVector($3, $5); }
 |distance '(' expr ',' expr ')'         { $$ = fabs($5 - $3); }
 
+//Distribuciones de probabilidad
+|binomd '(' expr ',' expr ',' expr ')'  { $$ = binomialDist($3, $5, $7); }
+
 // Constants
 |pi                                     { $$ = M_PI; }
 |gravi                                  { $$ = M_G; }
@@ -176,6 +183,7 @@ expr:   expr '+' expr		   	        { $$ = $1 + $3; }
 |proton                                 { $$ = -M_ELECTRON; }
 |neutron                                { $$ = 0; }
 |euler                                  { $$ = M_EULER; }
+
 |id                                     { $$ = $1->value; }
 |REAL                                   { $$ = $1; }
 ;
