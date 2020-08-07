@@ -121,20 +121,10 @@ double binomialCoef(int n, int k)
     return factorial(n) / (factorial(k) * factorial(n - k));
 }
 
-double binomialDist(int n, int x, double p)
+//Binomial distribution
+double binomialDist(int n, double p, int x)
 {
     return binomialCoef(n, x) * pow(p, x) * pow(1 - p, n - x);
-}
-
-double binomialDistCumulative(int n, int x, double p)
-{
-    int i = 0;
-    double r = 0;
-    for (i = 0; i <= x; i++)
-    {
-        r += binomialDist(n, i, p);
-    }
-    return r;
 }
 
 double binomialDistMean(int n, double p)
@@ -145,6 +135,17 @@ double binomialDistMean(int n, double p)
 double binomialDistVar(int n, double p)
 {
     return n * p * (1 - p);
+}
+
+double binomialDistCumulative(int n, double p, int x)
+{
+    int i = 0;
+    double r = 0;
+    for (i = 0; i <= x; i++)
+    {
+        r += binomialDist(n, p, i);
+    }
+    return r;
 }
 
 //Prints a table with all constants given a file

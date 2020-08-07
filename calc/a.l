@@ -6,14 +6,14 @@ real_number                 [0-9]+\.?[0-9]*
 %%
 "="                         { return asg; }
 
-"All"                       { return all; }
+"all"                       { return all; }
 
 "Delete"                    { return del; }
-"Cls"|"Clear"|"Clc"         { return clc; }
-"Consts"                    { return consts; }
-"List"                      { return list; }
-"Listd"                     { return listd; }
-"Exit"                      { return leave; }
+"cls"|"clear"|"clc"         { return clc; }
+"consts"                    { return consts; }
+"list"                      { return list; }
+"listd"                     { return listd; }
+"exit"                      { return leave; }
 
 ".print"                    { return print; }
 ".printd"                   { return printd; }
@@ -62,10 +62,14 @@ real_number                 [0-9]+\.?[0-9]*
 "Proy"                      { return proy; }
 "Norm"                      { return norm; }
 
-"Cnk"                       { return binomcoef; }
-"Pnk"                       { return permut; }
+"nCk"                       { return binomcoef; }
+"nPk"                       { return permut; }
 
-"BinomialD"                 { return binomd; }
+".mean"                     { return mean; }
+".var"                      { return variance; }
+".cumulative"               { return cumulative; }
+
+"Binomial"                  { return binomd; }
 
 "#pi"|"#pi"                 { return pi; }
 "#e"|"#napier"|"#euler"     { return euler; }
