@@ -4,17 +4,25 @@ Calcpreter es una calculadora con funciones básicas implementadas que podrás u
 
 ## Contenido
 
-* [Compilación desde código fuente](#compilación-desde-código-fuente)
-* [Sintaxis](#sintaxis)
-* [Tipos](#tipos)
-  * [Múltiples asignaciones](#múltiples-asignaciones)
-* [Comandos](#comandos)
-  * [Mostrando valores en pantalla](#mostrando-valores-en-pantalla)
-* [Constantes](#constantes)
-* [Expresiones algebraicas y operaciones](#expresiones-algebraicas-y-operaciones)
-* [Funciones integradas](#funciones-integradas)
-* [Scripts](#scripts)
-  * [Comentarios](#comentarios)
+- [Calcpreter](#calcpreter)
+  - [Contenido](#contenido)
+  - [Compilación desde código fuente](#compilación-desde-código-fuente)
+    - [Linux](#linux)
+      - [Ejecutarás calcpreter](#ejecutarás-calcpreter)
+  - [Sintaxis](#sintaxis)
+  - [Tipos](#tipos)
+    - [Reales](#reales)
+    - [Vectores](#vectores)
+      - [Accediendo a las componentes de un vector](#accediendo-a-las-componentes-de-un-vector)
+    - [Múltiples asignaciones](#múltiples-asignaciones)
+  - [Comandos](#comandos)
+    - [Mostrando valores en pantalla](#mostrando-valores-en-pantalla)
+  - [Constantes](#constantes)
+  - [Expresiones algebraicas y operaciones](#expresiones-algebraicas-y-operaciones)
+  - [Funciones integradas](#funciones-integradas)
+    - [Ejemplos](#ejemplos)
+  - [Scripts](#scripts)
+    - [Comentarios](#comentarios)
 
 ## Compilación desde código fuente
 
@@ -23,7 +31,7 @@ Calcpreter es una calculadora con funciones básicas implementadas que podrás u
 Dependencias
 
 ```shell
-sudo apt-get install bison && sudo apt-get install lex && sudo apt-get install gcc
+sudo apt-get install bison flex gcc libncurses5-dev
 ```
 
 Clonar el repositorio
@@ -41,7 +49,7 @@ cd calcpreter/calc
 Compilación lex/yacc/gcc
 
 ```shell
-lex a.l && yacc a.y && gcc y.tab.c -lm -o calcpreter.out
+lex a.l && yacc a.y && gcc y.tab.c -lm -lncurses -o calcpreter.out
 ```
 
 #### Ejecutarás calcpreter
@@ -55,9 +63,9 @@ lex a.l && yacc a.y && gcc y.tab.c -lm -o calcpreter.out
 Luego de cada asignación, comando, o expresión algebraica, es necesario cerrar la instrucción con `;` tal y como se muestra a continuación.
 
 ```F#
-a = sin(#pi);
+a = Sin(#pi);
 .clear;
-abs(-5).print;
+Abs(-5).print;
 ```
 
 ## Tipos
@@ -126,16 +134,18 @@ c = [c].i = a;
 
 ## Comandos
 
-|Comando|Descripción|Uso|
-|---|---|---|
-|.print|Muestra el valor de una variable en un formato adecuado|`variable.print`|
-|.printd|Muestra el valor de una variable en formato decimal|`variable.printd`
-|.info|Muestra el valor de una variable junto con su identificador en un formato adecuado|`variable.info`|
-|.infod|Muestra el valor de una variable jundo con su identificador en formato decimal|`variable.infod`|
-|.list|Muestra todas las variables ingresadas (reales o vectores) en un formato adecuado junto a su identificador|`list`|
-|.listd|Muestra el valor de todas las variables ingresadas (reales o vectores) en formato decimal junto a su identificador|`listd`|
-|.const|Muestra una tabla con todas las constantes disponibles|`const`|
-|.clear|Elimina todas las variables (reales o vectores) de memoria|`clear`|
+| Comando         | Descripción                                                                                                        | Uso                     |
+| --------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------- |
+| .print          | Muestra el valor de una variable en un formato adecuado                                                            | `variable.print`        |
+| .printd         | Muestra el valor de una variable en formato decimal                                                                | `variable.printd`       |
+| .info           | Muestra el valor de una variable junto con su identificador en un formato adecuado                                 | `variable.info`         |
+| .infod          | Muestra el valor de una variable jundo con su identificador en formato decimal                                     | `variable.infod`        |
+| List            | Muestra todas las variables ingresadas (reales o vectores) en un formato adecuado junto a su identificador         | `List`                  |
+| Listd           | Muestra el valor de todas las variables ingresadas (reales o vectores) en formato decimal junto a su identificador | `Listd`                 |
+| Consts          | Muestra una tabla con todas las constantes disponibles                                                             | `Consts`                |
+| Delete(All)     | Elimina todas las variables (reales o vectores) de memoria                                                         | `Delete(All)`           |
+| Cls, Clear, Clc | Limpia la pantalla de la terminal                                                                                  | `Clear` , `Cls` , `Clc` |
+| Exit            | Salir de calcpreter                                                                                                | `Exit`                  |
 
 ### Mostrando valores en pantalla
 
@@ -150,7 +160,7 @@ a.print;        //Imprime únicamente el valor de a;
 //Fin de programa de ejemplo;
 ```
 
-Cuya salida es:
+Salida:
 
 ```F#
 3.14159
@@ -170,15 +180,16 @@ a = #e;
 
 Aquí tienes una tabla con todas las constantes disponibles (Usando el sistema internacional).
 
-|Constante|Expresión|||Descripción|
-|:---:|---|---|---|---|
-|![equation](https://latex.codecogs.com/svg.latex?\pi)|#pi|#PI||Constante matemática π|
-|![equation](https://latex.codecogs.com/svg.latex?e)|#e|#euler|#napier|Número de Euler|
-|![equation](https://latex.codecogs.com/svg.latex?G)|#G|||Constante gravitacional|
-|![equation](https://latex.codecogs.com/svg.latex?k)|#k|||Constante de Coulomb|
-|![equation](https://latex.codecogs.com/svg.latex?c)|#c|||Constante de la velocidad de la luz|
-|![equation](https://latex.codecogs.com/svg.latex?-e)|#elect|||Carga de un electrón|
-|![equation](https://latex.codecogs.com/svg.latex?+e)|#prot|||Carga de un protón|
+|                       Constante                       | Expresión |        |         | Descripción                         |
+| :---------------------------------------------------: | --------- | ------ | ------- | ----------------------------------- |
+| ![equation](https://latex.codecogs.com/svg.latex?\pi) | #pi       | #PI    |         | Constante matemática π              |
+|  ![equation](https://latex.codecogs.com/svg.latex?e)  | #e        | #euler | #napier | Número de Euler                     |
+|  ![equation](https://latex.codecogs.com/svg.latex?G)  | #G        |        |         | Constante gravitacional             |
+|  ![equation](https://latex.codecogs.com/svg.latex?k)  | #k        |        |         | Constante de Coulomb                |
+|  ![equation](https://latex.codecogs.com/svg.latex?c)  | #c        |        |         | Constante de la velocidad de la luz |
+| ![equation](https://latex.codecogs.com/svg.latex?-e)  | #elect    |        |         | Carga de un electrón                |
+| ![equation](https://latex.codecogs.com/svg.latex?+e)  | #prot     |        |         | Carga de un protón                  |
+| ![equation](https://latex.codecogs.com/svg.latex?+e)  | #neut     |        |         | Carga de un protón                  |
 
 ## Expresiones algebraicas y operaciones
 
@@ -200,44 +211,49 @@ escalar = [a]*[c];
 
 ## Funciones integradas
 
-Para usar estas funciones es necesario usar paréntesis `(x)`. Salvo para valor absoluto en la que puedes usar barras `|x|` o `abs(x)`. Encontrarás funciones de dos parámetros de tipo `rnd(x, y)` en la que se tomarán dos expresiones.
+Para usar estas funciones es necesario usar paréntesis `(x)`. Salvo para valor absoluto en la que puedes usar barras `|x|` o `Abs(x)`. Encontrarás funciones de dos parámetros de tipo `Rnd(x, y)` en la que se tomarán dos expresiones.
 
-|Función|Alternativa|Descripción|Retorno|
-|---|---|---|---|
-|``cos(x)``||Función coseno|real|
-|``acos(x)``||Arcocoseno|real|
-|``cosh(x)``||Coseno hiperbólico|real|
-|`acosh(x)`||Coseno hiérbólico inverso|real|
-|`sin(x)`|`sen(x)`|Función seno|real|
-|`asin(x)`|`asen(x)`|Arcoseno|real|
-|`sinh(x)`|`senh(x)`|Seno hipebólico|real|
-|`asinh(x)`|`asenh(x)`|Seno hiperbólico inverso|real|
-|`tan(x)`|`tg(x)`|Función tangente|real|
-|`atan(x)`|`atg(x)`|Arcotangente|real|
-|`tanh(x)`|`tgh(x)`|Tangente hiperbólico|real|
-|`atanh(x)`|`atgh(x)`|Arcotangente hiperbólico|real|
-|`abs(x)`||Valor absoluto|real|
-|`sqrt(x)`||Raíz cuadrada|real|
-|`ceil(x)`||Función techo|real|
-|`floor(x)`||Función suelo|real|
-|`exp(x)`||Función exponencial|real|
-|`ln(x)`||Función logaritmo natural|real|
-|`log(x, y)`||Logaritmo base y de x|real|
-|`rnd(a, b)`||Número aleatorio entre a y b|real|
-|`mcm(a, b)`||Mínimo común múltiplo entre a y b|real|
-|`mcd(a, b)`||Máximo común divisor entre a y b|real|
-|`dist(a, b)`|`dist([a], [b])`|Distancia entre a y b|real|
-|`nthPri(x)`||Enésimo número primo|real|
-|`nthFib(x)`||Enésimo número de la sucesión de Fibonacci|real|
-|`gibbs([a], [b])`||Producto vectorial|vector|
+| Función           | Alternativa      | Descripción                                              | Retorno |
+| ----------------- | ---------------- | -------------------------------------------------------- | ------- |
+| `Cos(x)`          |                  | Función coseno                                           | real    |
+| `Acos(x)`         |                  | Arcocoseno                                               | real    |
+| `Cosh(x)`         |                  | Coseno hiperbólico                                       | real    |
+| `Acosh(x)`        |                  | Coseno hiérbólico inverso                                | real    |
+| `Sin(x)`          | `Sen(x)`         | Función seno                                             | real    |
+| `Asin(x)`         | `Asen(x)`        | Arcoseno                                                 | real    |
+| `Sinh(x)`         | `Senh(x)`        | Seno hipebólico                                          | real    |
+| `Asinh(x)`        | `Asenh(x)`       | Seno hiperbólico inverso                                 | real    |
+| `Tan(x)`          | `Tg(x)`          | Función tangente                                         | real    |
+| `Atan(x)`         | `Atg(x)`         | Arcotangente                                             | real    |
+| `Tanh(x)`         | `Tgh(x)`         | Tangente hiperbólico                                     | real    |
+| `Atanh(x)`        | `Atgh(x)`        | Arcotangente hiperbólico                                 | real    |
+| `Abs(x)`          | `Abs([x])`       | Valor absoluto de un número, norma o módulo de un vector | real    |
+| `Sqrt(x)`         |                  | Raíz cuadrada                                            | real    |
+| `Ceil(x)`         |                  | Función techo                                            | real    |
+| `Floor(x)`        |                  | Función suelo                                            | real    |
+| `Exp(x)`          |                  | Función exponencial                                      | real    |
+| `Ln(x)`           |                  | Función logaritmo natural                                | real    |
+| `Log(x, y)`       |                  | Logaritmo base y de x                                    | real    |
+| `Rnd(a, b)`       |                  | Número aleatorio entre a y b                             | real    |
+| `Mcm(a, b)`       |                  | Mínimo común múltiplo entre a y b                        | real    |
+| `Mcd(a, b)`       |                  | Máximo común divisor entre a y b                         | real    |
+| `Dist(a, b)`      | `Dist([a], [b])` | Distancia entre a y b                                    | real    |
+| `NthPri(x)`       |                  | Enésimo número primo                                     | real    |
+| `NthFib(x)`       |                  | Enésimo número de la sucesión de Fibonacci               | real    |
+| `Gibbs([a], [b])` |                  | Producto vectorial                                       | vector  |
+| `Unit([a])`       |                  | Vector unitario                                          | vector  |
+| `Proy([a], [b])`  |                  | Proyección de a en b                                     | vector  |
+| `Norm([a], [b])`  |                  | Vector normal entre a y v                                | vector  |
+| `nCk(a, b)`       |                  | Combinaciones de a en grupos de tamaño b                 | real    |
+| `nPk(a, b)`       |                  | Permutaciones de a en grupos de tamaño b                 | real    |
 
 ### Ejemplos
 
 ```F#
-[a] = vProduct([1,2,3],[#pi,rnd(5,10),cos(#pi)]]);
+[a] = Gibbs([1,2,3],[#pi,Rnd(5,10),Cos(#pi)]]);
 a = |-5|;
-b = distance([1,2,3],[4,5,6]);
-c = distance(10,20);
+b = Distance([1,2,3],[4,5,6]);
+c = Distance(10,20);
 ```
 
 ## Scripts

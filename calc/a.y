@@ -38,10 +38,7 @@
 %token ASINH ATANH
 
 %token ABS LN SQRT CEIL FLOOR RND GCD EXP LOG LCM ROUND FIX MOD
-%token distance nthpri nthfib pcrux unit proy norm permut binomd
-
-%token mean variance cumulative
-%token binomcoef
+%token distance nthpri nthfib pcrux unit proy norm permut binomcoef
 
 %type <real_s> expr assign
 %type <vector_s> v_expr v_assign
@@ -171,22 +168,6 @@ expr:   expr '+' expr		   	        { $$ = $1 + $3; }
 |'|' v_expr '|'                         { $$ = magnitude($2); }
 |distance '(' v_expr ',' v_expr ')'     { $$ = distanceVector($3, $5); }
 |distance '(' expr ',' expr ')'         { $$ = fabs($5 - $3); }
-
-//Distribuciones de probabilidad
-|binomd '(' expr ',' expr ',' expr ')'  { $$ = binomialDist($3, $5, $7); }
-|binomd '(' expr ',' expr ')' mean      { $$ = binomialDistMean($3, $5); }
-|binomd '(' expr ',' expr ')' variance  { $$ = binomialDistVar($3, $5); }
-|binomd '(' expr ',' expr ',' expr ')' info
-                                        {
-                                            $$ = binomialDist($3, $5, $7);
-                                            printf("\tE(X) = %g\n", binomialDistMean($3, $5));
-                                            printf("\tV(X) = %g\n", binomialDistVar($3, $5));
-                                            printf("\tP(X <= %g) = %g\n", $7, binomialDistCumulative($3, $5, $7));
-                                        }
-|binomd '(' expr ',' expr ',' expr ')' cumulative
-                                        {
-                                            $$ = binomialDistCumulative($3, $5, $7);
-                                        }
 
 // Constants
 |pi                                     { $$ = M_PI; }
