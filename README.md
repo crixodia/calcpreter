@@ -64,7 +64,7 @@ Luego de cada asignación, comando, o expresión algebraica, es necesario cerrar
 
 ```F#
 a = Sin(#pi);
-.clear;
+Delete(All);
 Abs(-5).print;
 ```
 
@@ -156,7 +156,7 @@ Aquí tienes un ejemplo en el que al final muestra todas las variables.
 a=#pi;          //Una constante;
 a.print;        //Imprime únicamente el valor de a;
 [a]=[a,2,3];    //equivale a [3.1416, 2, 3];
-.list;          //Muestra todo lo declarado;
+List;          //Muestra todo lo declarado;
 //Fin de programa de ejemplo;
 ```
 
