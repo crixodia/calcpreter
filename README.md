@@ -187,9 +187,9 @@ Aquí tienes una tabla con todas las constantes disponibles (Usando el sistema i
 |  ![equation](https://latex.codecogs.com/svg.latex?G)  | #G        |        |         | Constante gravitacional             |
 |  ![equation](https://latex.codecogs.com/svg.latex?k)  | #k        |        |         | Constante de Coulomb                |
 |  ![equation](https://latex.codecogs.com/svg.latex?c)  | #c        |        |         | Constante de la velocidad de la luz |
-| ![equation](https://latex.codecogs.com/svg.latex?-e)  | #elect    |        |         | Carga de un electrón                |
-| ![equation](https://latex.codecogs.com/svg.latex?+e)  | #prot     |        |         | Carga de un protón                  |
-| ![equation](https://latex.codecogs.com/svg.latex?+e)  | #neut     |        |         | Carga de un protón                  |
+| ![equation](https://latex.codecogs.com/svg.latex?-e)  | #elect    |        |         | Carga de electrón                   |
+| ![equation](https://latex.codecogs.com/svg.latex?+e)  | #prot     |        |         | Carga de protón                     |
+| ![equation](https://latex.codecogs.com/svg.latex?n)   | #neut     |        |         | Carga de neutrón                    |
 
 ## Expresiones algebraicas y operaciones
 
