@@ -1165,7 +1165,7 @@ YY_RULE_SETUP
 case 62:
 YY_RULE_SETUP
 #line 105 "a.l"
-{ ; /* Sube la linea de abajo para modo archivos */}
+{ /*printf("<< ")*/; }
 	YY_BREAK
 case 63:
 /* rule 63 can match eol */

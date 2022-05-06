@@ -1,5 +1,6 @@
-const double VECTOR_SZ = 3 * sizeof(double);
+const double VECTOR_SZ = 3 * sizeof(double); // 3 doubles
 
+// Vector definition
 typedef struct vector
 {
     struct vector *sig;
@@ -7,17 +8,20 @@ typedef struct vector
     double value[3];
 } vector;
 
+// Creates a Vector
 vector *createVector()
 {
     return NULL;
 };
 
+// Inserts a vector into the symbol table
 void insertVector(vector **pT, vector *s)
 {
     s->sig = (*pT);
     (*pT) = s;
 };
 
+// Look for a vector in the symbol table
 vector *searchVector(vector *t, char _name[20])
 {
     while ((t != NULL) && (strcmp(_name, t->name)))
@@ -25,6 +29,7 @@ vector *searchVector(vector *t, char _name[20])
     return (t);
 };
 
+// Prints the vector
 void printVector(vector *t, int type)
 {
     printf("\n[Vectors]:\n");
@@ -43,7 +48,7 @@ void printVector(vector *t, int type)
     }
 };
 
-//Escalar por vector
+// Scale vector
 void escalarVector(double *target, double *a, double esc)
 {
     int i;
@@ -53,7 +58,7 @@ void escalarVector(double *target, double *a, double esc)
     }
 }
 
-//Suma de vectores
+// Vector additon
 void addVector(double *target, double *a, double *b)
 {
     int i;
@@ -63,14 +68,14 @@ void addVector(double *target, double *a, double *b)
     }
 }
 
-//Resta vector
+// Vector substract
 void minusVector(double *target, double *a, double *b)
-{    
+{
     escalarVector(target, b, -1.0);
     addVector(target, a, target);
 }
 
-//Producto punto entre vectores
+// Dot product
 double dotProduct(double *a, double *b)
 {
     double r = 0;
@@ -82,13 +87,13 @@ double dotProduct(double *a, double *b)
     return r;
 }
 
-//Norma de un vector
+// Vector magnitud
 double magnitude(double *a)
 {
     return sqrt(dotProduct(a, a));
 }
 
-//Producto cruz o vectorial
+// Cross product
 void crossProduct(double *target, double *a, double *b)
 {
     target[0] = a[1] * b[2] - a[2] * b[1];
@@ -96,7 +101,7 @@ void crossProduct(double *target, double *a, double *b)
     target[2] = a[0] * b[1] - a[1] * b[0];
 }
 
-//Distancia entre vectores
+// Euclidean distance between two vectors
 double distanceVector(double *a, double *b)
 {
     double temp[3];
@@ -104,21 +109,21 @@ double distanceVector(double *a, double *b)
     return magnitude(temp);
 }
 
-//Proyección de vectores
+// Proy Vector
 double projectionVector(double *target, double *a, double *b)
 {
     double esc = dotProduct(a, b) / dotProduct(a, a);
     escalarVector(target, a, esc);
 }
 
-//Vector normal
+// Normal Vector
 double normalVector(double *target, double *a, double *b)
 {
     projectionVector(target, a, b);
     minusVector(target, b, target);
 }
 
-//Vector unitario
+// Normalize vector
 double unitVector(double *target, double *a)
 {
     escalarVector(target, a, 1 / magnitude(a));

@@ -1,14 +1,14 @@
 %{
-    //Tipos de dato
+    // Data types
     #include "Clc.c"
     #include "Real.c"
     #include "Vector.c"
 
-    //Tablas de símbolo
+    // Symbol tables
     real * t;
     vector * v;
 
-    //Prototipos
+    // Prototypes
     int yylex(void);
     int yyerror();
 %}
@@ -48,7 +48,7 @@
 %right '^' '!'
 
 %%
-// Expresiones
+// Expressions
 stmt:stmt assign ';'                    { ; }
 |stmt id info ';'                       { printf(">> %s = %g\n",$2->name, $2->value); }
 |stmt id infod ';'                      { printf(">> %s = %f\n",$2->name, $2->value); }
@@ -99,7 +99,7 @@ v_assign:  id_vector asg v_expr         {
 |id_vector canonk asg expr              { $1->value[2] = $4; }
 ;
 
-// Escarlar operations
+// Scalar operations
 expr:   expr '+' expr		   	        { $$ = $1 + $3; }
 |expr '-' expr			                { $$ = $1 - $3; }
 |expr '*' expr			                { $$ = $1 * $3; }
@@ -162,7 +162,7 @@ expr:   expr '+' expr		   	        { $$ = $1 + $3; }
 |nthpri '(' expr ')'                    { $$ = nthPrime((int)$3); }
 |nthfib '(' expr ')'                    { $$ = nthFibonacci((int)$3); }
 
-// Vector -> Escalar operations
+// Vector -> Scalar operations
 |v_expr '*' v_expr                      { $$ = dotProduct($1, $3); }
 |ABS '(' v_expr ')'                     { $$ = magnitude($3); }
 |'|' v_expr '|'                         { $$ = magnitude($2); }

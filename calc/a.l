@@ -102,7 +102,7 @@ real_number                 [0-9]+\.?[0-9]*
                                 return id_vector;
                             }
 \/\/.*;                     { ; }
-[ \b\t]+                    { ; /* Sube la linea de abajo para modo archivos */}
+[ \b\t]+                    { /*printf("<< ")*/; }
 [\n]                        { printf("<< "); /* Comentar para archivos */ }
 .                           { return yytext[0]; }
 %%

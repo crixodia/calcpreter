@@ -68,16 +68,16 @@
 /* First part of user prologue.  */
 #line 1 "a.y"
 
-    //Tipos de dato
+    // Data types
     #include "Clc.c"
     #include "Real.c"
     #include "Vector.c"
 
-    //Tablas de símbolo
+    // Symbol tables
     real * t;
     vector * v;
 
-    //Prototipos
+    // Prototypes
     int yylex(void);
     int yyerror();
 
