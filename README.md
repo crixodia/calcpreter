@@ -180,16 +180,16 @@ a = #e;
 
 Aquí tienes una tabla con todas las constantes disponibles (Usando el sistema internacional).
 
-|                       Constante                       | Expresión |        |         | Descripción                         |
-| :---------------------------------------------------: | --------- | ------ | ------- | ----------------------------------- |
-| ![equation](https://latex.codecogs.com/svg.latex?\pi) | #pi       | #PI    |         | Constante matemática π              |
-|  ![equation](https://latex.codecogs.com/svg.latex?e)  | #e        | #euler | #napier | Número de Euler                     |
-|  ![equation](https://latex.codecogs.com/svg.latex?G)  | #G        |        |         | Constante gravitacional             |
-|  ![equation](https://latex.codecogs.com/svg.latex?k)  | #k        |        |         | Constante de Coulomb                |
-|  ![equation](https://latex.codecogs.com/svg.latex?c)  | #c        |        |         | Constante de la velocidad de la luz |
-| ![equation](https://latex.codecogs.com/svg.latex?-e)  | #elect    |        |         | Carga de electrón                   |
-| ![equation](https://latex.codecogs.com/svg.latex?+e)  | #prot     |        |         | Carga de protón                     |
-| ![equation](https://latex.codecogs.com/svg.latex?n)   | #neut     |        |         | Carga de neutrón                    |
+| Constante | Expresión |        |         | Descripción                         |
+| :-------: | --------- | ------ | ------- | ----------------------------------- |
+|  $$\pi$$  | #pi       | #PI    |         | Constante matemática π              |
+|   $$e$$   | #e        | #euler | #napier | Número de Euler                     |
+|   $$G$$   | #G        |        |         | Constante gravitacional             |
+|   $$k$$   | #k        |        |         | Constante de Coulomb                |
+|   $$c$$   | #c        |        |         | Constante de la velocidad de la luz |
+|  $$-e$$   | #elect    |        |         | Carga de electrón                   |
+|  $$+e$$   | #prot     |        |         | Carga de protón                     |
+| $$neut$$  | #neut     |        |         | Carga de neutrón                    |
 
 ## Expresiones algebraicas y operaciones
 
