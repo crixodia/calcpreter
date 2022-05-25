@@ -182,14 +182,14 @@ Aquí tienes una tabla con todas las constantes disponibles (Usando el sistema i
 
 | Constante | Expresión |        |         | Descripción                         |
 | :-------: | --------- | ------ | ------- | ----------------------------------- |
-|  $ \pi $  | #pi       | #PI    |         | Constante matemática π              |
-|   $ e $   | #e        | #euler | #napier | Número de Euler                     |
-|   $ G $   | #G        |        |         | Constante gravitacional             |
-|   $ k $   | #k        |        |         | Constante de Coulomb                |
-|   $ c $   | #c        |        |         | Constante de la velocidad de la luz |
-|  $ -e $   | #elect    |        |         | Carga de electrón                   |
-|  $ +e $   | #prot     |        |         | Carga de protón                     |
-| $ neut $  | #neut     |        |         | Carga de neutrón                    |
+|   $\pi$   | #pi       | #PI    |         | Constante matemática π              |
+|    $e$    | #e        | #euler | #napier | Número de Euler                     |
+|    $G$    | #G        |        |         | Constante gravitacional             |
+|    $k$    | #k        |        |         | Constante de Coulomb                |
+|    $c$    | #c        |        |         | Constante de la velocidad de la luz |
+|   $-e$    | #elect    |        |         | Carga de electrón                   |
+|   $+e$    | #prot     |        |         | Carga de protón                     |
+|  $neut$   | #neut     |        |         | Carga de neutrón                    |
 
 ## Expresiones algebraicas y operaciones
 
