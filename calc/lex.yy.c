@@ -1165,13 +1165,13 @@ YY_RULE_SETUP
 case 62:
 YY_RULE_SETUP
 #line 105 "a.l"
-{ /*printf("<< ")*/; }
+{ printf("<< "); }
 	YY_BREAK
 case 63:
 /* rule 63 can match eol */
 YY_RULE_SETUP
 #line 106 "a.l"
-{ printf("<< "); /* Comentar para archivos */ }
+{ /*printf("<< ");  Comentar para scripting */ }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP

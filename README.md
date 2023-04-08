@@ -1,6 +1,6 @@
 # Calcpreter
 
-Calcpreter es una calculadora con funciones básicas implementadas que podrás usar en la CLI. Podrás guardar variables durante la ejecución y operar con números reales o con vectores en 3 dimensiones.
+Calcpreter es una calculadora con funciones básicas implementadas que podrás usar en la CLI. Podrás guardar variables durante la ejecución y operar con números reales o con vectores en 3 dimensiones. El objetivo de este repositorio es que aprendas de compiladores e interpretes.
 
 ## Contenido
 
@@ -8,7 +8,7 @@ Calcpreter es una calculadora con funciones básicas implementadas que podrás u
   - [Contenido](#contenido)
   - [Compilación desde código fuente](#compilación-desde-código-fuente)
     - [Linux](#linux)
-      - [Ejecutarás calcpreter](#ejecutarás-calcpreter)
+    - [Ejecución](#ejecución)
   - [Sintaxis](#sintaxis)
   - [Tipos](#tipos)
     - [Reales](#reales)
@@ -22,7 +22,7 @@ Calcpreter es una calculadora con funciones básicas implementadas que podrás u
   - [Funciones integradas](#funciones-integradas)
     - [Ejemplos](#ejemplos)
   - [Scripts](#scripts)
-    - [Comentarios](#comentarios)
+  - [Comentarios](#comentarios)
 
 ## Compilación desde código fuente
 
@@ -52,7 +52,7 @@ Compilación lex/yacc/gcc
 lex a.l && yacc a.y && gcc y.tab.c -lm -lncurses -o calcpreter.out
 ```
 
-#### Ejecutarás calcpreter
+### Ejecución
 
 ```shell
 ./calcpreter.out
@@ -250,7 +250,7 @@ Para usar estas funciones es necesario usar paréntesis `(x)`. Salvo para valor 
 ### Ejemplos
 
 ```F#
-[a] = Gibbs([1,2,3],[#pi,Rnd(5,10),Cos(#pi)]]);
+[a] = Gibbs([1,2,3],[#pi,Rnd(5,10),Cos(#pi)]);
 a = |-5|;
 b = Distance([1,2,3],[4,5,6]);
 c = Distance(10,20);
@@ -264,7 +264,7 @@ Puedes scribir tus propios scripts en un archivo. Y ejecutarlos a través de la 
 ./calcshell.out < input.txt >> output.txt
 ```
 
-### Comentarios
+## Comentarios
 
 Solo es posible comentarios de una sola línea con el siguiente formato
 
